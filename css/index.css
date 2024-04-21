@@ -1,0 +1,68 @@
+/*css/index.css*/
+body {
+    margin: 0;
+    padding: 0px;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    background-color: #ffcc00;
+}
+
+.container {
+    
+    position: relative;
+    width: 100%;
+    text-align: center;
+    /*hauteur a 100% de l'hauteur de l'écran*/
+    height: 100vh;
+    height: 100%;
+}
+
+.map {
+    width: auto;
+     /* Ajustez selon la taille de votre image */
+    height: 90vh;
+}
+
+.player {
+    position: fixed;
+    bottom: 10vh; /* Correspond à la hauteur de l'inventaire */
+    left: 0;
+    width: auto; /* Pour conserver la largeur naturelle de l'image */
+    max-width: 100%; 
+    height: 20vh; /* Ajustez les dimensions de votre personnage */
+}
+
+.inventory {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    height: 10vh;
+}
+
+.reward {
+    height: 90%;
+    display: inline-block;
+    width: 40px; /* Ajustez selon la taille souhaitée */
+    background-color: #ffcc00; /* Couleur du rond */
+    border-radius: 50%;
+    margin: 2px;
+    cursor: pointer;
+    
+}
+
+
+/* Couleur de fond pour les zones de forme circulaire de la crte map.jpeg */
+.legendecilcle {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: none;
+    margin: 2px;
+    color: rgb(1, 128, 128);
+    font-weight: bold;
+}
+
+
