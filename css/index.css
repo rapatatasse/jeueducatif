@@ -29,7 +29,15 @@ body {
     left: 0;
     width: auto; /* Pour conserver la largeur naturelle de l'image */
     max-width: 100%; 
-    height: 20vh; /* Ajustez les dimensions de votre personnage */
+    height: 30vh; /* Ajustez les dimensions de votre personnage */
+}
+.compagnon {
+    position: fixed;
+    bottom: 10vh; /* Correspond à la hauteur de l'inventaire */
+    left: 120px;
+    width: auto; /* Pour conserver la largeur naturelle de l'image */
+    max-width: 100%; 
+    height: 10vh; /* Ajustez les dimensions de votre personnage */
 }
 
 .inventory {
@@ -45,12 +53,12 @@ body {
 .reward {
     height: 90%;
     display: inline-block;
-    width: 40px; /* Ajustez selon la taille souhaitée */
+    width: 80px; /* Ajustez selon la taille souhaitée */
     background-color: #ffcc00; /* Couleur du rond */
     border-radius: 50%;
     margin: 2px;
     cursor: pointer;
-    
+    background-size: cover; /* Pour ajuster la taille de l'image à l'élément */
 }
 
 

@@ -1,6 +1,26 @@
 let level = 1;
 let playerLives = 5;
-let opponentLives = 5;
+let opponentLives = 1;
+
+document.addEventListener('DOMContentLoaded', () => {
+    startGame();
+    loadLastPokemonReward();
+});
+function loadLastPokemonReward() {
+    const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
+
+    const lastReward = rewards.recompense.length > 0 ? rewards.recompense[rewards.recompense.length - 1] : null;
+
+    if (lastReward) {
+        const pokemonImage = document.getElementById('pokemon1').querySelector('img');
+        pokemonImage.src = `image/${lastReward}`;
+    } else {
+        // Si aucune récompense n'est stockée, utilisez l'image de pokemon1.png
+        const pokemonImage = document.getElementById('pokemon1').querySelector('img');
+        pokemonImage.src = 'image/pokemon1.png';
+    }
+}
+
 
 function startGame() {
     resetLives(); 
@@ -25,7 +45,14 @@ function checkAnswer(playerAnswer) {
         }
 
         if (opponentLives <= 0) {
-            displayResultMessage(true);
+            if (level < 3) {
+                level++;
+                changePokemonImage(level);
+                updateleveltexte(level);
+                startGame();
+            } else {
+                displayResultMessage(true);
+            }
         } else if (playerLives <= 0) {
             displayResultMessage(false);
         } else {
@@ -34,12 +61,17 @@ function checkAnswer(playerAnswer) {
     }
 }
 
-function changeLevel() {
-    const levelSelect = document.getElementById('levelSelect');
-    level = parseInt(levelSelect.value);
-    resetLives()
-    startGame(); // Recommencez le jeu avec le nouveau niveau
+function updateleveltexte(level) {
+    const leveltexte = document.getElementById('leveltexte');
+    leveltexte.innerText = level;
 }
+
+
+function changePokemonImage(level) {
+    const pokemonImage = document.getElementById('pokemon2').querySelector('img');
+    pokemonImage.src = `image/math${level}.png`;
+}
+
 function resetLives() {
     playerLives = 5;
     opponentLives = 5;
@@ -68,22 +100,44 @@ function generateQuestion() {
 
 function displayResultMessage(isPlayerWinner) {
     const resultMessage = document.getElementById('result-message');
-    const gamesWon = document.getElementById('gamesWon');
-    const gamesLost = document.getElementById('gamesLost');
+    const backButton = document.createElement('button');
+    backButton.innerText = 'Retour à la carte';
+    backButton.classList.add('backbutton');
+    backButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
     resultMessage.style.fontSize = '30px';
     resultMessage.style.fontWeight = 'bold';
     resultMessage.style.marginTop = '20px';
 
     if (isPlayerWinner) {
         resultMessage.style.color = 'green';
-        resultMessage.innerText = 'Bravo!';
-        gamesWon.innerText =  Math.floor(gamesWon.innerText) + 1
+        if (level < 3) {
+            resultMessage.innerText = 'Bravo!';
+            gamesWon.innerText =  Math.floor(gamesWon.innerText) + 1;
+        } else {
+            resultMessage.innerText = 'Bravo! Vous avez atteint le niveau maximum.';
+            // Stocker la récompense dans le cache
+            const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
+            rewards.recompense.push(`math1.png`);
+            localStorage.setItem('rewards', JSON.stringify(rewards));
+            // Ajouter le bouton de retour
+            resultMessage.appendChild(backButton);
+        }
     } else {
         resultMessage.style.color = 'red';
         resultMessage.innerText = 'Perdu pour cette fois. Recommencez!';
-        gamesLost.innerText =  Math.floor(gamesLost.innerText) + 1
+        // Supprimer la dernière récompense du JSON
+        const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
+        if (rewards.recompense.length > 0) {
+            rewards.recompense.pop(); // Supprimer la dernière récompense
+            localStorage.setItem('rewards', JSON.stringify(rewards));
+        }
+        resultMessage.appendChild(backButton);
     }
 }
+
 
 function clearResultMessage() {
     document.getElementById('result-message').innerText = '';

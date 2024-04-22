@@ -8,51 +8,44 @@
     <title>Pokemon Attack Game</title>
 </head>
 <body>
-    <div class="container background">
-        <div class="game-container">
+    <div class="container">
+        <div class="game-container p-10">
             <div class="column">
                 <div class="life-bar" id="playerLifeBar">❤❤❤❤❤</div>
                 <div class="pokemon" id="pokemon1"><img src="image/pokemon1.png" alt="Pokemon 1"></div>
             </div>
             <div class="column center-container">
                 <div class="addition" id="addition">?</div>
-                <button class="buttonlancer" onclick="startGame()">⟳</button>
+                <div class="">
+                    <div></div>
+                    <div class="answers">
+                        <button onclick="checkAnswer(1)">1</button>
+                        <button onclick="checkAnswer(2)">2</button>
+                        <button onclick="checkAnswer(3)">3</button>
+                        <button onclick="checkAnswer(4)">4</button>
+                        <button onclick="checkAnswer(5)">5</button>
+                        <button onclick="checkAnswer(6)">6</button>
+                        <button onclick="checkAnswer(7)">7</button>
+                        <button onclick="checkAnswer(8)">8</button>
+                        <button onclick="checkAnswer(9)">9</button>
+                        <button onclick="checkAnswer(10)">10</button>
+                    </div>
+                    <div id="result-message"></div>
+                </div>
             </div>
             <div class="column">
                 <div class="life-bar" id="opponentLifeBar">❤❤❤❤❤</div>
-                <div class="pokemon" id="pokemon2"><img src="image/pokemon2.png" alt="Pokemon 2"></div>
+                <div class="pokemon" id="pokemon2"><img src="image/math1.png" alt=""></div>
             </div>
         </div>
-        <div class="">
-            <div></div>
-            <div class="answers">
-                <button onclick="checkAnswer(1)">1</button>
-                <button onclick="checkAnswer(2)">2</button>
-                <button onclick="checkAnswer(3)">3</button>
-                <button onclick="checkAnswer(4)">4</button>
-                <button onclick="checkAnswer(5)">5</button>
-            </div>
-            <div class="answers">
-                <button onclick="checkAnswer(6)">6</button>
-                <button onclick="checkAnswer(7)">7</button>
-                <button onclick="checkAnswer(8)">8</button>
-                <button onclick="checkAnswer(9)">9</button>
-                <button onclick="checkAnswer(10)">10</button>
-            </div>
-            <div id="result-message"></div>
-        </div>
-        <div class="bottom-card">
+
+        <div class="bottom-card p-10">
             <img src="image/joueur.png" alt="Joueur Image">
             <div class="player-info">
                 <h2>Informations du Joueur</h2>
                 <label for="levelSelect">Niveau:</label>
-                <select id="levelSelect" onchange="changeLevel()">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-                <p>Parties gagnées: <span id="gamesWon">0</span></p>
-                <p>Parties perdues: <span id="gamesLost">0</span></p>
+                <span id="leveltexte" >1</span>
+                    
             </div>
         </div>
     </div>
