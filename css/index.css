@@ -53,12 +53,11 @@ body {
 .reward {
     height: 90%;
     display: inline-block;
-    width: 80px; /* Ajustez selon la taille souhaitée */
+    width: 8vh; /* Ajustez selon la taille souhaitée */
     background-color: #ffcc00; /* Couleur du rond */
     border-radius: 50%;
-    margin: 2px;
-    cursor: pointer;
-    background-size: cover; /* Pour ajuster la taille de l'image à l'élément */
+    margin: 2px;    cursor: pointer;
+    background-size: 100% auto;
 }
 
 
