@@ -117,13 +117,18 @@ function displayResultMessage(isPlayerWinner) {
             resultMessage.innerText = 'Bravo!';
             gamesWon.innerText =  Math.floor(gamesWon.innerText) + 1;
         } else {
-            resultMessage.innerText = 'Bravo! Vous avez atteint le niveau maximum.';
-            // Stocker la récompense dans le cache
             const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
-            rewards.recompense.push(`math1.png`);
-            localStorage.setItem('rewards', JSON.stringify(rewards));
-            // Ajouter le bouton de retour
-            resultMessage.appendChild(backButton);
+            if (!rewards.recompense.includes('math1.png')) {
+                resultMessage.innerText = 'Bravo! Vous avez atteint le niveau maximum.';
+                // Ajouter "math1.png" aux récompenses
+                rewards.recompense.push('math1.png');
+                localStorage.setItem('rewards', JSON.stringify(rewards));
+                // Ajouter le bouton de retour
+                resultMessage.appendChild(backButton);
+            } else {
+                resultMessage.innerText = 'Compagnon déjà gagné!';
+                resultMessage.appendChild(backButton);
+            }
         }
     } else {
         resultMessage.style.color = 'red';

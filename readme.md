@@ -40,3 +40,11 @@ pour l'adaptation chaque petit jeux dois avoir plusieures niveaux de difficulté
     A la fin du jeu le joueur sera redirigévers la page index.html qui affichera toutes les recompenses gagnées.
     Pour cela il faudra inscrire dans le JSON du joueur les recompenses gagnées. le Json est déja mise en pace et se trouve dans le dossier data/</p>
   </p>
+  <h3>Gain perte</p>
+  voir fonction dans fichier math1 :
+  <li>si je joueur il dois revenir à la page index avec un nouveau comagnon</li>
+            const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
+            rewards.recompense.push(`nomcompangion.png`);
+  <li>si le joueur perd il dois perdre le compagnon avec lequel il joue</li>
+            rewards.recompense.pop(); // Supprimer la dernière récompense
+            localStorage.setItem('rewards', JSON.stringify(rewards));
