@@ -12,12 +12,12 @@ function loadLastPokemonReward() {
     const lastReward = rewards.recompense.length > 0 ? rewards.recompense[rewards.recompense.length - 1] : null;
 
     if (lastReward) {
-        const pokemonImage = document.getElementById('pokemon1').querySelector('img');
-        pokemonImage.src = `image/${lastReward}`;
+        const companionImage = document.getElementById('companion1').querySelector('img');
+        companionImage.src = `image/${lastReward}`;
     } else {
-        // Si aucune récompense n'est stockée, utilisez l'image de pokemon1.png
-        const pokemonImage = document.getElementById('pokemon1').querySelector('img');
-        pokemonImage.src = 'image/pokemon1.png';
+        // Si aucune récompense n'est stockée, utilisez l'image de companion1.png
+        const companionImage = document.getElementById('companion1').querySelector('img');
+        companionImage.src = 'image/companion1.png';
     }
 }
 
@@ -68,13 +68,13 @@ function updateleveltexte(level) {
 
 
 function changePokemonImage(level) {
-    const pokemonImage = document.getElementById('pokemon2').querySelector('img');
-    pokemonImage.src = `image/math${level}.png`;
+    const companionImage = document.getElementById('companion2').querySelector('img');
+    companionImage.src = `image/math${level}.png`;
 }
 
 function resetLives() {
     playerLives = 5;
-    opponentLives = 5;
+    opponentLives = 1;
 
     // Mettez à jour les barres de vie dans l'interface
     updateLifeBar('playerLifeBar', playerLives);
