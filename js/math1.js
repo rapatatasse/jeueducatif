@@ -1,6 +1,6 @@
 let level = 1;
 let playerLives = 5;
-let opponentLives = 1;
+let opponentLives = 5;
 
 document.addEventListener('DOMContentLoaded', () => {
     startGame();
@@ -28,9 +28,11 @@ function startGame() {
     clearResultMessage();
 }
 
-function checkAnswer(playerAnswer) {
+async function checkAnswer(playerAnswer) {
     const correctAnswer = parseInt(document.getElementById('addition').getAttribute('data-answer'));
-
+    await pause();
+    var audio = new Audio('son/coup.mp3');
+    audio.play();
     if (!isNaN(playerAnswer)) {
         if (playerAnswer === correctAnswer) {
             opponentLives--;
@@ -107,9 +109,6 @@ function displayResultMessage(isPlayerWinner) {
         window.location.href = 'index.html';
     });
 
-    resultMessage.style.fontSize = '30px';
-    resultMessage.style.fontWeight = 'bold';
-    resultMessage.style.marginTop = '20px';
 
     if (isPlayerWinner) {
         resultMessage.style.color = 'green';
@@ -120,6 +119,8 @@ function displayResultMessage(isPlayerWinner) {
             const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
             if (!rewards.recompense.includes('math1.png')) {
                 resultMessage.innerText = 'Bravo! Vous avez atteint le niveau maximum.';
+                var lineBreak = document.createElement('br');
+                resultMessage.appendChild(lineBreak);
                 // Ajouter "math1.png" aux récompenses
                 rewards.recompense.push('math1.png');
                 localStorage.setItem('rewards', JSON.stringify(rewards));
@@ -127,12 +128,16 @@ function displayResultMessage(isPlayerWinner) {
                 resultMessage.appendChild(backButton);
             } else {
                 resultMessage.innerText = 'Compagnon déjà gagné!';
+                var lineBreak = document.createElement('br');
+                resultMessage.appendChild(lineBreak);
                 resultMessage.appendChild(backButton);
             }
         }
     } else {
         resultMessage.style.color = 'red';
         resultMessage.innerText = 'Perdu pour cette fois. Recommencez!';
+        var lineBreak = document.createElement('br');
+        resultMessage.appendChild(lineBreak);
         // Supprimer la dernière récompense du JSON
         const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
         if (rewards.recompense.length > 0) {
@@ -152,3 +157,12 @@ function clearResultMessage() {
 document.addEventListener('DOMContentLoaded', () => {
     startGame();
 });
+
+function pause() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log("Après 2 secondes");
+            resolve();
+        }, 500);
+    });
+}

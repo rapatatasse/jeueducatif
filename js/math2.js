@@ -5,6 +5,7 @@ let opponentLives = 1;
 document.addEventListener('DOMContentLoaded', () => {
     startGame();
     loadLastPokemonReward();
+
 });
 function loadLastPokemonReward() {
     const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
@@ -28,9 +29,12 @@ function startGame() {
     clearResultMessage();
 }
 
-function checkAnswer(playerAnswer) {
+async function checkAnswer(playerAnswer) {
+    
     const correctAnswer = parseInt(document.getElementById('addition').getAttribute('data-answer'));
-
+    await pause();
+    var audio = new Audio('son/coup.mp3');
+    audio.play();
     if (!isNaN(playerAnswer)) {
         if (playerAnswer === correctAnswer) {
             opponentLives--;
@@ -74,7 +78,7 @@ function changePokemonImage(level) {
 
 function resetLives() {
     playerLives = 5;
-    opponentLives = 1;
+    opponentLives = 5;
 
     // Mettez à jour les barres de vie dans l'interface
     updateLifeBar('playerLifeBar', playerLives);
@@ -106,9 +110,6 @@ function displayResultMessage(isPlayerWinner) {
         window.location.href = 'index.html';
     });
 
-    resultMessage.style.fontSize = '30px';
-    resultMessage.style.fontWeight = 'bold';
-    resultMessage.style.marginTop = '20px';
 
     if (isPlayerWinner) {
         resultMessage.style.color = 'green';
@@ -151,3 +152,11 @@ function clearResultMessage() {
 document.addEventListener('DOMContentLoaded', () => {
     startGame();
 });
+function pause() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log("Après 2 secondes");
+            resolve();
+        }, 500);
+    });
+}
