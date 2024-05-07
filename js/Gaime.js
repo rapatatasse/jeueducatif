@@ -1,16 +1,31 @@
 var words = ["chat", "chien", "maison", "arbre", "soleil", "fleur", "école", "vélo"];
+var images = ["chat.jpg", "image/pendu/chien.jpg", "maison.jpg", "arbre.jpg", "soleil.jpg", "fleur.jpg", "école.jpg", "vélo.jpg"];
 
 var randomIndex = Math.floor(Math.random() * words.length);
 var randomWord = words[randomIndex].toUpperCase(); // Convertir en majuscules pour l'affichage
-document.getElementById("addition").textContent = randomWord.replace(/[A-Za-z]/g, "_ ");
-document.getElementById("addition").setAttribute("data-answer", randomIndex + 1); // Index de base 1
+var randomImage = images[randomIndex]; // Sélectionner l'image correspondante
+
+document.getElementById("addition").textContent = randomWord;
+
+// Charger l'image aléatoire
+var img = document.getElementById("wordImage");
+img.src = "image/" + randomImage;
 
 function checkWord(word) {
-    var answer = parseInt(document.getElementById("addition").getAttribute("data-answer"));
     var selectedWord = word.toUpperCase(); // Convertir en majuscules pour la comparaison
     if (selectedWord === randomWord) {
         document.getElementById("result-message").textContent = "Correct !";
+        // Réduire le nombre de cœurs dans la barre de vie
+        reduceOpponentLife();
     } else {
         document.getElementById("result-message").textContent = "Incorrect. Essayez encore.";
     }
+}
+
+function reduceOpponentLife() {
+    // Récupérer l'élément de la barre de vie de l'opposant
+    var lifeBar = document.getElementById("opponentLifeBar");
+    
+    // Supprimer un cœur en enlevant un caractère du contenu de la barre de vie
+    lifeBar.textContent = lifeBar.textContent.slice(0, -1);
 }
