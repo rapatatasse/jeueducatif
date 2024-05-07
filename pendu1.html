@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/math1.css">
+    <title>Pokemon Attack Game</title>
+</head>
+<body>
+    <div class="container">
+        <div class="game-container p-10">
+            <div class="column">
+                <div class="life-bar" id="playerLifeBar">❤❤❤❤❤</div>
+                <div class="companion" id="companion1"><img src="image/companion1.png" alt="Pokemon 1"></div>
+            </div>
+            <div class="column center-container">
+                <div class="addition" id="addition">?</div>
+                <div class="">
+                    <div></div>
+                    <div class="answers">
+                        <button onclick="checkWord('A')">a</button>
+                        <button onclick="checkWord('B')">b</button>
+                        <button onclick="checkWord('C')">c</button>
+                        <button onclick="checkWord('D')">d</button>
+                        <button onclick="checkWord('E')">e</button>
+                        <button onclick="checkWord('F')">f</button>
+                        <button onclick="checkWord('G')">g</button>
+                        <button onclick="checkWord('H')">h</button>
+                        <button onclick="checkWord('I')">i</button>
+                        <button onclick="checkWord('j')">j</button>
+                        <!-- Ajoutez autant de boutons avec des mots que nécessaire -->
+                    </div>
+                    <div id="result-message"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="life-bar" id="opponentLifeBar">❤❤❤❤❤</div>
+                <div class="companion" id="companion2"><img src="image/math1.png" alt=""></div>
+            </div>
+        </div>
+
+        <div class="bottom-card p-10">
+            <img src="image/joueur.png" alt="Joueur Image">
+            <div class="player-info">
+                <h2>Informations du Joueur</h2>
+                <label for="levelSelect">Niveau:</label>
+                <span id="leveltexte" >1</span>
+                    
+            </div>
+        </div>
+    </div>
+    <script src="js/Gaime.js"></script>
+</body>
+</html>
