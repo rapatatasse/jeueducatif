@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/math2.css">
+    <link rel="stylesheet" href="css/styleglobal.css">
+    <title>Pokemon Attack Game</title>
+
+</head>
+<body>
+    <div class="container">
+        <div class="game-container p-10">
+            <div class="column">
+                <div class="life-bar" id="playerLifeBar">❤❤❤❤❤</div>
+                <div class="companion" id="companion1"><img src="image/companion1.png" alt="Pokemon 1"></div>
+            </div>
+            <div class="column center-container">
+                <div class="addition" id="addition">?</div>
+                <div class="">
+                    <div></div>
+                    <div class="answers">
+                        <button onclick="checkAnswer(0)">0</button>
+                        <button onclick="checkAnswer(1)">1</button>
+                        <button onclick="checkAnswer(2)">2</button>
+                        <button onclick="checkAnswer(3)">3</button>
+                        <button onclick="checkAnswer(4)">4</button>
+                        <button onclick="checkAnswer(5)">5</button>
+                        <button onclick="checkAnswer(6)">6</button>
+                        <button onclick="checkAnswer(7)">7</button>
+                        <button onclick="checkAnswer(8)">8</button>
+                        <button onclick="checkAnswer(9)">9</button>
+                        <button onclick="checkAnswer(10)">10</button>
+                    </div>
+                    <div id="result-message"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="life-bar" id="opponentLifeBar">❤❤❤❤❤</div>
+                <div class="companion" id="companion2"><img src="image/math.n2.1.png" alt=""></div>
+            </div>
+        </div>
+
+        <div class="bottom-card p-10">
+            <img src="image/joueur.png" alt="Joueur Image">
+            <div class="player-info">
+                <h2>Informations du Joueur</h2>
+                <label for="levelSelect">Niveau:</label>
+                <span id="leveltexte" >1</span>
+                    
+            </div>
+            <audio controls loop autoplay>
+                <source src="son/math2.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-button">Retour</a>
+    <script src="js/math2.js"></script>
+
+</body>
+</html>

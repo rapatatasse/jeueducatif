@@ -48,3 +48,10 @@ pour l'adaptation chaque petit jeux dois avoir plusieures niveaux de difficulté
   <li>si le joueur perd il dois perdre le compagnon avec lequel il joue</li>
             rewards.recompense.pop(); // Supprimer la dernière récompense
             localStorage.setItem('rewards', JSON.stringify(rewards));
+
+
+
+
+<h3>bilbli</h3>
+<h4>Son</h4>
+<a href="https://pixabay.com/fr/music/search/genre/jeux%20vid%C3%A9o/" rel="stylesheet">Pixabay</a>
