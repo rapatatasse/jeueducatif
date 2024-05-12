@@ -1,6 +1,7 @@
 
 .container {
     background-image: url('../image/alpha/fondalpha1.png');
+    background-position: bottom;
 }
 
 .question {

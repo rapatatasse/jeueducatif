@@ -9,6 +9,7 @@ body {
     /*hauteur a 100% de l'hauteur de l'écran*/
     height: 100vh;
     background-image: url('../image/fond1.jpg');
+    background-position: bottom;
     background-size: cover;
     justify-content: center;
     align-items: center;

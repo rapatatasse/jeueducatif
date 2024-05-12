@@ -149,7 +149,8 @@ function displayResultMessage(isPlayerWinner) {
     backButton.addEventListener('click', () => {
         window.location.href = 'index.html';
     });
-
+    const blocquestion = document.getElementById('answers');
+    blocquestion.style.display = 'none';
 
     if (isPlayerWinner) {
         

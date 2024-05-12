@@ -1,6 +1,7 @@
 let level = 1;
 let playerLives = 5;
 let opponentLives = 5;
+let missingIndex = 0;
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -96,6 +97,7 @@ function updateLifeBar(lifeBarId, lives) {
 
 // Fonction pour générer une question en fonction du niveau
 function generateQuestion() {
+    console.log("generateQuestion");
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let startIndex, endIndex;
 
@@ -111,8 +113,11 @@ function generateQuestion() {
     }
 
     const alphabetArray = alphabet.split('').slice(startIndex, endIndex + 1);
-    const missingIndex = Math.floor(Math.random() * alphabetArray.length);
-
+    let testlettre = Math.floor(Math.random() * alphabetArray.length);
+    while (testlettre === missingIndex) {
+        testlettre = Math.floor(Math.random() * alphabetArray.length);
+    }
+    missingIndex = testlettre;
     let questionString = '';
     for (let i = 0; i < alphabetArray.length; i++) {
         if (i === missingIndex) {
@@ -159,10 +164,11 @@ function displayResultMessage(isPlayerWinner) {
     backButton.addEventListener('click', () => {
         window.location.href = 'index.html';
     });
+    const blocquestion = document.getElementById('answers');
+    blocquestion.style.display = 'none';
 
 
     if (isPlayerWinner) {
-        
         resultMessage.style.color = 'green';
         if (level < 3) {
             resultMessage.innerText = 'Bravo!';
@@ -214,8 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function pause() {
     return new Promise(resolve => {
         setTimeout(() => {
-            console.log("Après 2 secondes");
             resolve();
-        }, 500);
+        }, 300);
     });
 }
