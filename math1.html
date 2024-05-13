@@ -8,10 +8,7 @@
     <link rel="stylesheet" href="css/mathgeneral.css">
     <link rel="stylesheet" href="css/styleglobal.css">
     <title>Pokemon Attack Game</title>
-    <audio autoplay loop>
-        <source src="son/math1.mp3" type="audio/mpeg">
-        Votre navigateur ne supporte pas l'élément audio.
-    </audio>
+
 </head>
 <body>
     <div class="container">
@@ -21,10 +18,14 @@
                 <div class="companion" id="companion1"><img src="image/companion1.png" alt="Pokemon 1"></div>
             </div>
             <div class="column center-container">
-                <div class="addition" id="addition">?</div>
+                <div class="question" id="question">?
+                </div>
+                <div class="progressbar-wrapper">
+                    <div class="progressbar temps" id="progressbar"></div>  
+                </div>
                 <div class="">
                     <div></div>
-                    <div class="answers">
+                    <div class="answers" id="answers">
                         <button onclick="checkAnswer(1)">1</button>
                         <button onclick="checkAnswer(2)">2</button>
                         <button onclick="checkAnswer(3)">3</button>
@@ -36,6 +37,7 @@
                         <button onclick="checkAnswer(9)">9</button>
                         <button onclick="checkAnswer(10)">10</button>
                     </div>
+                   
                     <div class="result-message" id="result-message"></div>
                 </div>
             </div>

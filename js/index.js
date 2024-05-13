@@ -33,5 +33,10 @@ function hiddenButtonOnMap() {
             if (aElement) {
                 aElement.style.display = "block";
             }
+            const textElement = document.querySelector('#linkmath1 text');
+            // Vérifiez si l'élément texte existe avant de le modifier
+            if (textElement) {
+                textElement.textContent = '2';
+}
         }
 }

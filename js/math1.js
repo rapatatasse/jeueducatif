@@ -3,11 +3,31 @@ let playerLives = 5;
 let opponentLives = 5;
 let varniveaudecarte = niveaudecarte()
 let varimageniveau = imageduniveau() 
+let difficulte = testdifficulte()
+let progressWidth = 0;
+let progressInterval = null;
+
+
+const progressBar = document.getElementById('progressbar');
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
+    testdifficulte(); //ajout barre de temps pour chaque question
     startGame();
     loadLastPokemonReward();
 });
+
+function testdifficulte() {
+    let rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
+    if (!rewards.recompense.includes(varimageniveau)) {
+        return true
+    }
+    else {
+        return false
+    }
+}
+
 function imageduniveau(){
      if (varniveaudecarte === 1) {
         return "math1.png";
@@ -20,10 +40,10 @@ function imageduniveau(){
 function startGame() {
     resetLives(); 
     if (varniveaudecarte === 1) {
-        generateQuestioNiveau1();
+        generateQuestionNiveau1();
     }
     else if (varniveaudecarte === 2) {
-        generateQuestioNiveau2();
+        generateQuestionNiveau2();
     }
     clearResultMessage();
 }
@@ -39,8 +59,8 @@ function niveaudecarte() {
 
 }
 function loadLastPokemonReward() {
-    const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
-
+    
+    let rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
     const lastReward = rewards.recompense.length > 0 ? rewards.recompense[rewards.recompense.length - 1] : null;
 
     if (lastReward) {
@@ -56,11 +76,12 @@ function loadLastPokemonReward() {
 
 
 async function checkAnswer(playerAnswer) {
-    const correctAnswer = parseInt(document.getElementById('addition').getAttribute('data-answer'));
+    arreterProgression()
+    const correctAnswer = parseInt(document.getElementById('question').getAttribute('data-answer'));
     await pause();
     var audio = new Audio('son/coup.mp3');
-    audio.play();
-    if (!isNaN(playerAnswer)) {
+    //audio.play();
+    
         if (playerAnswer === correctAnswer) {
             opponentLives--;
 
@@ -85,10 +106,16 @@ async function checkAnswer(playerAnswer) {
         } else if (playerLives <= 0) {
             displayResultMessage(false);
         } else {
-            generateQuestion();
+            if (varniveaudecarte === 1) {
+                generateQuestionNiveau1();
+            }
+            else if (varniveaudecarte === 2) {
+                generateQuestionNiveau2();
+            }
         }
-    }
+ 
 }
+
 
 function updateleveltexte(level) {
     const leveltexte = document.getElementById('leveltexte');
@@ -116,29 +143,54 @@ function resetLives() {
 }
 
 function updateLifeBar(lifeBarId, lives) {
+    console.log("mise a jour vie : "+lifeBarId+"vie : "+lives)
     const lifeBar = document.getElementById(lifeBarId);
     const hearts = '❤'.repeat(lives);
     lifeBar.innerText = hearts;
 }
 
-function generateQuestioNiveau1() {
+function generateQuestionNiveau1() {
+    
     const maxSum = level === 1 ? 5 : (level === 2 ? 8 : 10);
     console.log("level"+level)
     const num1 = Math.floor(Math.random() * (maxSum - 1)) + 1;
     const num2 = Math.floor(Math.random() * (maxSum - num1 )) + 1;
     const correctAnswer = num1 + num2;
 
-    document.getElementById('addition').innerText = `${num1} + ${num2} = ?`;
-    document.getElementById('addition').setAttribute('data-answer', correctAnswer);
+    document.getElementById('question').innerText = `${num1} + ${num2} = ?`;
+    document.getElementById('question').setAttribute('data-answer', correctAnswer);
+
+    // Gestion du temps
+    let progressWidth = 0;
+    const progressBar = document.getElementById('progressbar');
+
+    if (!progressInterval) { // Vérifie si l'intervalle n'existe pas déjà
+        progressInterval = setInterval(() => {
+            if (progressWidth < 100) {
+                progressWidth += 10;
+                progressBar.style.width = progressWidth + '%';
+            } else {
+            clearInterval(progressInterval); // Arrêter l'interval une fois la progression à 100%
+            checkAnswer("pas de reponse joueur"); // Appeler la fonction de vérification de la réponse
+            progressInterval = null; // Réinitialise progressInterval pour permettre de redémarrer la progression
+            return;
+        }
+    }, 1000);
 }
-function generateQuestioNiveau2() {
+}
+function arreterProgression() {
+    clearInterval(progressInterval); // Arrêter l'intervalle lorsqu'on clique sur le bouton
+    progressInterval = null; // Réinitialise progressInterval
+}
+
+async function generateQuestionNiveau2() {
     const maxSum = level === 1 ? 5 : (level === 2 ? 8 : 10);
     const num1 = Math.floor(Math.random() * maxSum) + 1;
     const num2 = Math.floor(Math.random() * num1) + 1; // Assurez-vous que num2 est inférieur à num1 pour éviter des résultats négatifs
     const correctAnswer = num1 - num2; // Utilisez la soustraction pour obtenir la réponse correcte
 
-    document.getElementById('addition').innerText = `${num1} - ${num2} = ?`;
-    document.getElementById('addition').setAttribute('data-answer', correctAnswer);
+    document.getElementById('question').innerText = `${num1} - ${num2} = ?`;
+    document.getElementById('question').setAttribute('data-answer', correctAnswer);
 }
 
 function displayResultMessage(isPlayerWinner) {
@@ -151,6 +203,7 @@ function displayResultMessage(isPlayerWinner) {
     });
     const blocquestion = document.getElementById('answers');
     blocquestion.style.display = 'none';
+    let rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
 
     if (isPlayerWinner) {
         
@@ -159,7 +212,7 @@ function displayResultMessage(isPlayerWinner) {
             resultMessage.innerText = 'Bravo!';
             gamesWon.innerText =  Math.floor(gamesWon.innerText) + 1;
         } else {
-            const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
+
             
             if (!rewards.recompense.includes(varimageniveau)) {
                 resultMessage.innerText = 'Bravo! Vous avez atteint le niveau maximum.';
@@ -206,7 +259,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function pause() {
     return new Promise(resolve => {
         setTimeout(() => {
-            console.log("Après 2 secondes");
             resolve();
         }, 500);
     });
