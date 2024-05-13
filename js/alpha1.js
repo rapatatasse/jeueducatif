@@ -1,43 +1,20 @@
 let level = 1;
 let playerLives = 5;
 let opponentLives = 5;
-let varniveaudecarte = niveaudecarte()
-let varimageniveau = imageduniveau() 
+let missingIndex = 0;
+
 
 document.addEventListener('DOMContentLoaded', () => {
     startGame();
     loadLastPokemonReward();
 });
-function imageduniveau(){
-     if (varniveaudecarte === 1) {
-        return "math1.png";
-    }
-    else if (varniveaudecarte === 2) {
-        return "math.n2.1.png";
-    }
-}
 
 function startGame() {
     resetLives(); 
-    if (varniveaudecarte === 1) {
-        generateQuestioNiveau1();
-    }
-    else if (varniveaudecarte === 2) {
-        generateQuestioNiveau2();
-    }
+    generateQuestion();
     clearResultMessage();
 }
-function niveaudecarte() {
-    const currentUrl = window.location.href;
-    const fileName = currentUrl.split('/').pop(); // Split the URL by '/' and get the last element (filename)
-    if (fileName === "math1.html") {
-        return 1
-    }
-    if (fileName === "math2.html") { 
-        return 2
-    }  
 
-}
 function loadLastPokemonReward() {
     const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
 
@@ -45,7 +22,7 @@ function loadLastPokemonReward() {
 
     if (lastReward) {
         const companionImage = document.getElementById('companion1').querySelector('img');
-        companionImage.src = `image/math/${lastReward}`;
+        companionImage.src = `image/alpha/${lastReward}`;
     } else {
         // Si aucune récompense n'est stockée, utilisez l'image de companion1.png
         const companionImage = document.getElementById('companion1').querySelector('img');
@@ -53,22 +30,21 @@ function loadLastPokemonReward() {
     }
 }
 
-
-
 async function checkAnswer(playerAnswer) {
-    const correctAnswer = parseInt(document.getElementById('addition').getAttribute('data-answer'));
+    const correctAnswer = document.getElementById('question').getAttribute('data-answer');
+    console.log(!isNaN(playerAnswer));
     await pause();
     var audio = new Audio('son/coup.mp3');
     audio.play();
-    if (!isNaN(playerAnswer)) {
+   
         if (playerAnswer === correctAnswer) {
             opponentLives--;
-
+            console.log("correct");
             // Mise à jour de la vie de l'adversaire dans l'interface
             updateLifeBar('opponentLifeBar', opponentLives);
         } else {
             playerLives--;
-
+            console.log("incorrect");
             // Mise à jour de la vie du joueur dans l'interface
             updateLifeBar('playerLifeBar', playerLives);
         }
@@ -87,7 +63,7 @@ async function checkAnswer(playerAnswer) {
         } else {
             generateQuestion();
         }
-    }
+    
 }
 
 function updateleveltexte(level) {
@@ -98,17 +74,14 @@ function updateleveltexte(level) {
 
 function changePokemonImage(level) {
     const companionImage = document.getElementById('companion2').querySelector('img');
-    if (varniveaudecarte === 1) {
-        companionImage.src = `image/math/math${level}.png`;
-    }
-    else if (varniveaudecarte === 2) {
-        companionImage.src = `image/math/math.n2.${level}.png`;
-    }
+   
+    companionImage.src = `image/alpha/alpha${level}.png`;
+   
 }
 
 function resetLives() {
     playerLives = 5;
-    opponentLives = 1;
+    opponentLives = 5;
 
     // Mettez à jour les barres de vie dans l'interface
     updateLifeBar('playerLifeBar', playerLives);
@@ -116,30 +89,72 @@ function resetLives() {
 }
 
 function updateLifeBar(lifeBarId, lives) {
+    console.log("updateLifeBar", lifeBarId, lives);
     const lifeBar = document.getElementById(lifeBarId);
     const hearts = '❤'.repeat(lives);
     lifeBar.innerText = hearts;
 }
 
-function generateQuestioNiveau1() {
-    const maxSum = level === 1 ? 5 : (level === 2 ? 8 : 10);
-    console.log("level"+level)
-    const num1 = Math.floor(Math.random() * (maxSum - 1)) + 1;
-    const num2 = Math.floor(Math.random() * (maxSum - num1 )) + 1;
-    const correctAnswer = num1 + num2;
+// Fonction pour générer une question en fonction du niveau
+function generateQuestion() {
+    console.log("generateQuestion");
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let startIndex, endIndex;
 
-    document.getElementById('addition').innerText = `${num1} + ${num2} = ?`;
-    document.getElementById('addition').setAttribute('data-answer', correctAnswer);
-}
-function generateQuestioNiveau2() {
-    const maxSum = level === 1 ? 5 : (level === 2 ? 8 : 10);
-    const num1 = Math.floor(Math.random() * maxSum) + 1;
-    const num2 = Math.floor(Math.random() * num1) + 1; // Assurez-vous que num2 est inférieur à num1 pour éviter des résultats négatifs
-    const correctAnswer = num1 - num2; // Utilisez la soustraction pour obtenir la réponse correcte
+    if (level === 1) {
+        startIndex = 0;
+        endIndex = 7;
+    } else if (level === 2) {
+        startIndex = 7;
+        endIndex = 15;
+    } else {
+        startIndex = 15;
+        endIndex = alphabet.length - 1;
+    }
 
-    document.getElementById('addition').innerText = `${num1} - ${num2} = ?`;
-    document.getElementById('addition').setAttribute('data-answer', correctAnswer);
+    const alphabetArray = alphabet.split('').slice(startIndex, endIndex + 1);
+    let testlettre = Math.floor(Math.random() * alphabetArray.length);
+    while (testlettre === missingIndex) {
+        testlettre = Math.floor(Math.random() * alphabetArray.length);
+    }
+    missingIndex = testlettre;
+    let questionString = '';
+    for (let i = 0; i < alphabetArray.length; i++) {
+        if (i === missingIndex) {
+            questionString += ' ?  ';
+        } else {
+            questionString += alphabetArray[i] + '  ';
+        }
+    }
+
+    const correctAnswer = alphabetArray[missingIndex];
+    document.getElementById('question').innerText = questionString;
+    document.getElementById('question').setAttribute('data-answer', correctAnswer);
+
+    // Generate six random letters as options
+    const answerOptions = [];
+    while (answerOptions.length < 5) {
+        const randomIndex = Math.floor(Math.random() * alphabetArray.length);
+        const randomLetter = alphabetArray[randomIndex];
+        if (randomLetter !== correctAnswer && !answerOptions.includes(randomLetter)) {
+            answerOptions.push(randomLetter);
+        }
+    }
+    answerOptions.push(correctAnswer); // Add the correct answer
+    answerOptions.sort(() => Math.random() - 0.5); // Shuffle the options
+
+    const answersContainer = document.getElementById('answers');
+    answersContainer.innerHTML = ''; // Clear previous answers
+
+    answerOptions.forEach(letter => {
+        const button = document.createElement('button');
+        button.innerText = letter;
+        button.setAttribute('onclick', `checkAnswer('${letter}')`);
+        answersContainer.appendChild(button);
+    });
 }
+
+
 
 function displayResultMessage(isPlayerWinner) {
     const resultMessage = document.getElementById('result-message');
@@ -152,8 +167,8 @@ function displayResultMessage(isPlayerWinner) {
     const blocquestion = document.getElementById('answers');
     blocquestion.style.display = 'none';
 
+
     if (isPlayerWinner) {
-        
         resultMessage.style.color = 'green';
         if (level < 3) {
             resultMessage.innerText = 'Bravo!';
@@ -161,12 +176,11 @@ function displayResultMessage(isPlayerWinner) {
         } else {
             const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
             
-            if (!rewards.recompense.includes(varimageniveau)) {
+            if (!rewards.recompense.includes("alpha1.png")) {
                 resultMessage.innerText = 'Bravo! Vous avez atteint le niveau maximum.';
                 var lineBreak = document.createElement('br');
                 resultMessage.appendChild(lineBreak);
-                // Ajouter "math1.png" aux récompenses
-                rewards.recompense.push(varimageniveau);
+                rewards.recompense.push("alpha1.png");
                 localStorage.setItem('rewards', JSON.stringify(rewards));
                 // Ajouter le bouton de retour
                 resultMessage.appendChild(backButton);
@@ -206,8 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function pause() {
     return new Promise(resolve => {
         setTimeout(() => {
-            console.log("Après 2 secondes");
             resolve();
-        }, 500);
+        }, 300);
     });
 }

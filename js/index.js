@@ -12,7 +12,7 @@ function loadRewards() {
     rewards.recompense.forEach((reward, index) => {
         const rewardDiv = document.getElementById(`reward${index + 1}`);
         if (rewardDiv) {
-            rewardDiv.style.backgroundImage = `url('image/math/${reward}')`;
+            rewardDiv.style.backgroundImage = `url('image/${reward}')`;
         }
     });
     clearRewardsButton.addEventListener('click', () => {
