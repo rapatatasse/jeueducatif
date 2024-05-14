@@ -2,8 +2,8 @@ let level = 1;
 let playerLives = 5;
 let opponentLives = 5;
 let varniveaudecarte = niveaudecarte()
-let varimageniveau = imageduniveau() 
 let difficulte = testdifficulte()
+let varimageniveau = imageduniveau() 
 let progressWidth = 0;
 let progressInterval = null;
 
@@ -20,20 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function testdifficulte() {
     let rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
-    if (!rewards.recompense.includes(varimageniveau)) {
-        return true
+    nomachercher  = "math.n"+varniveaudecarte+".d1.png"
+    if (rewards.recompense.includes("math.n"+varniveaudecarte+".d1.png")) {
+        return 2
     }
-    else {
-        return false
+    else  {
+        return 1
     }
 }
 
 function imageduniveau(){
      if (varniveaudecarte === 1) {
-        return "math1.png";
+        return "math.n1.d1.png";
     }
     else if (varniveaudecarte === 2) {
-        return "math.n2.1.png";
+        return "math.n2.d1.png";
     }
 }
 
@@ -62,18 +63,13 @@ function loadLastPokemonReward() {
     
     let rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
     const lastReward = rewards.recompense.length > 0 ? rewards.recompense[rewards.recompense.length - 1] : null;
-
+    const companionImage = document.getElementById('companion1').querySelector('img');
     if (lastReward) {
-        const companionImage = document.getElementById('companion1').querySelector('img');
-        companionImage.src = `image/math/${lastReward}`;
-    } else {
-        // Si aucune récompense n'est stockée, utilisez l'image de companion1.png
-        const companionImage = document.getElementById('companion1').querySelector('img');
+        companionImage.src = `image/${lastReward}`;
+    } else { // Si aucune récompense n'est stockée, utilisez l'image de companion1.png
         companionImage.src = 'image/companion1.png';
     }
 }
-
-
 
 async function checkAnswer(playerAnswer) {
     arreterProgression()
@@ -81,19 +77,15 @@ async function checkAnswer(playerAnswer) {
     await pause();
     var audio = new Audio('son/coup.mp3');
     //audio.play();
-    
         if (playerAnswer === correctAnswer) {
             opponentLives--;
-
             // Mise à jour de la vie de l'adversaire dans l'interface
             updateLifeBar('opponentLifeBar', opponentLives);
         } else {
             playerLives--;
-
             // Mise à jour de la vie du joueur dans l'interface
             updateLifeBar('playerLifeBar', playerLives);
         }
-
         if (opponentLives <= 0) {
             if (level < 3) {
                 level++;
@@ -126,17 +118,16 @@ function updateleveltexte(level) {
 function changePokemonImage(level) {
     const companionImage = document.getElementById('companion2').querySelector('img');
     if (varniveaudecarte === 1) {
-        companionImage.src = `image/math/math${level}.png`;
+        companionImage.src = `image/math.n1.d${level}.png`;
     }
     else if (varniveaudecarte === 2) {
-        companionImage.src = `image/math/math.n2.${level}.png`;
+        companionImage.src = `image/math.n2.d${level}.png`;
     }
 }
 
 function resetLives() {
     playerLives = 5;
     opponentLives = 1;
-
     // Mettez à jour les barres de vie dans l'interface
     updateLifeBar('playerLifeBar', playerLives);
     updateLifeBar('opponentLifeBar', opponentLives);
@@ -159,24 +150,28 @@ function generateQuestionNiveau1() {
 
     document.getElementById('question').innerText = `${num1} + ${num2} = ?`;
     document.getElementById('question').setAttribute('data-answer', correctAnswer);
+    
+    if (difficulte === 2) {
+       
+        // Gestion du temps
+        let progressWidth = 0;
+        const progressBar = document.getElementById('progressbar');
+        progressBar.style.display = 'block';
 
-    // Gestion du temps
-    let progressWidth = 0;
-    const progressBar = document.getElementById('progressbar');
-
-    if (!progressInterval) { // Vérifie si l'intervalle n'existe pas déjà
-        progressInterval = setInterval(() => {
-            if (progressWidth < 100) {
-                progressWidth += 10;
-                progressBar.style.width = progressWidth + '%';
-            } else {
-            clearInterval(progressInterval); // Arrêter l'interval une fois la progression à 100%
-            checkAnswer("pas de reponse joueur"); // Appeler la fonction de vérification de la réponse
-            progressInterval = null; // Réinitialise progressInterval pour permettre de redémarrer la progression
-            return;
+        if (!progressInterval) { // Vérifie si l'intervalle n'existe pas déjà
+            progressInterval = setInterval(() => {
+                if (progressWidth < 100) {
+                    progressWidth += 10;
+                    progressBar.style.width = progressWidth + '%';
+                } else {
+                clearInterval(progressInterval); // Arrêter l'interval une fois la progression à 100%
+                checkAnswer("pas de reponse joueur"); // Appeler la fonction de vérification de la réponse
+                progressInterval = null; // Réinitialise progressInterval pour permettre de redémarrer la progression
+                return;
+                }
+            }, 1000);
         }
-    }, 1000);
-}
+    }
 }
 function arreterProgression() {
     clearInterval(progressInterval); // Arrêter l'intervalle lorsqu'on clique sur le bouton
@@ -208,13 +203,14 @@ function displayResultMessage(isPlayerWinner) {
     if (isPlayerWinner) {
         
         resultMessage.style.color = 'green';
+        resultMessage.style.backgroundColor = 'white';
         if (level < 3) {
             resultMessage.innerText = 'Bravo!';
             gamesWon.innerText =  Math.floor(gamesWon.innerText) + 1;
         } else {
 
             
-            if (!rewards.recompense.includes(varimageniveau)) {
+            if (difficulte === 1) { // Si l'image n'est pas déjà dans les récompenses
                 resultMessage.innerText = 'Bravo! Vous avez atteint le niveau maximum.';
                 var lineBreak = document.createElement('br');
                 resultMessage.appendChild(lineBreak);
@@ -223,13 +219,17 @@ function displayResultMessage(isPlayerWinner) {
                 localStorage.setItem('rewards', JSON.stringify(rewards));
                 // Ajouter le bouton de retour
                 resultMessage.appendChild(backButton);
-            } else {
-                resultMessage.innerText = 'Compagnon déjà gagné!';
+            } else if (difficulte === 2) {
+                resultMessage.innerText = 'Evolution de votre compagion au niveau 2';
                 var lineBreak = document.createElement('br');
                 resultMessage.appendChild(lineBreak);
                 resultMessage.appendChild(backButton);
+                // Ajouter "math2.png" aux récompenses
+                const index = rewards.recompense.indexOf("math.n1.d1.png");
+                rewards.recompense.splice(index, 1);
+                rewards.recompense.push("math.n1.d2.png");
+                localStorage.setItem('rewards', JSON.stringify(rewards));
             }
-
         }
     } else {
         resultMessage.style.color = 'red';
