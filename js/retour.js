@@ -1,7 +1,6 @@
 let level = 1;
 let playerLives = 5;
 let opponentLives = 1;
-let tableauimage =["image/france.png", "image/italie.png", "image/etats-unis.png", "image/allemagne.png"]
 
 document.addEventListener('DOMContentLoaded', () => {
     startGame();
@@ -18,9 +17,10 @@ function loadLastPokemonReward() {
     } else {
         // Si aucune récompense n'est stockée, utilisez l'image de companion1.png
         const companionImage = document.getElementById('companion1').querySelector('img');
-        companionImage.src = 'image/monstre1.png';
+        companionImage.src = 'image/companion1.png';
     }
 }
+
 
 function startGame() {
     resetLives(); 
@@ -29,8 +29,7 @@ function startGame() {
 }
 
 function checkAnswer(playerAnswer) {
-    const correctAnswer = document.getElementById('questionimage').getAttribute('data-answer');
-    console.log("reponse donner : " + playerAnswer + " reponse correcte : " + correctAnswer );
+    const correctAnswer = parseInt(document.getElementById('addition').getAttribute('data-answer'));
 
     if (!isNaN(playerAnswer)) {
         if (playerAnswer === correctAnswer) {
@@ -89,15 +88,15 @@ function updateLifeBar(lifeBarId, lives) {
 }
 
 function generateQuestion() {
-    // Génère un index aléatoire pour choisir une image dans le tableau
-    var randomIndex = Math.floor(Math.random() * tableauimage.length);
-    // Met à jour la source de l'image avec l'image aléatoire
-    document.getElementById('questionimage').src = tableauimage[randomIndex];
-    document.getElementById('questionimage').setAttribute('data-answer', tableauimage[randomIndex]);
-}
+    const maxSum = level === 1 ? 5 : (level === 2 ? 8 : 10);
+    console.log("level"+level)
+    const num1 = Math.floor(Math.random() * (maxSum - 1)) + 1;
+    const num2 = Math.floor(Math.random() * (maxSum - num1 )) + 1;
+    const correctAnswer = num1 + num2;
 
-// Appelle la fonction generateQuestion() pour générer une question au démarrage ou à chaque fois que nécessaire
-generateQuestion();
+    document.getElementById('addition').innerText = `${num1} + ${num2} = ?`;
+    document.getElementById('addition').setAttribute('data-answer', correctAnswer);
+}
 
 function displayResultMessage(isPlayerWinner) {
     const resultMessage = document.getElementById('result-message');

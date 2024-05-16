@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokemon Attack Game</title>
-    <!-- Ajoutez vos liens vers les fichiers CSS -->
-    <link rel="stylesheet" href="css/pendu.css">
+    <link rel="stylesheet" href="css/alpha1.css">
     <link rel="stylesheet" href="css/mathgeneral.css">
     <link rel="stylesheet" href="css/styleglobal.css">
+    <title>Pokemon Attack Game</title>
 </head>
 <body>
     <div class="container">
@@ -18,22 +17,18 @@
                 <div class="companion" id="companion1"><img src="image/companion1.png" alt="Pokemon 1"></div>
             </div>
             <div class="column center-container">
-                <!-- Div pour afficher le mot aléatoire -->
-                <div class="addition" id="addition"></div>
-                <!-- Image associée au mot aléatoire -->
-                <img id="wordImage" src="image\pendu\chien.jpg" alt="Image">
-                <!-- Div pour afficher les mots -->
-                <div class="answers" id="buttonsContainer">
-                    <!-- Boutons des mots gere par le JS -->
-  
-                    <!-- Ajoutez d'autres mots selon vos besoins -->
+                <div class="question" id="question">?</div>
+                <div class="">
+                    <div></div>
+                    <div class="answers" id="answers">
+                      <!--button answers generer avec le JS-->
+                    </div>
+                    <div class="result-message" id="result-message"></div>
                 </div>
-                <!-- Div pour afficher le message de résultat -->
-                <div class="result-message" id="result-message"></div>
             </div>
             <div class="column">
                 <div class="life-bar" id="opponentLifeBar">❤❤❤❤❤</div>
-                <div class="companion" id="companion2"><img src="./image/pendu/bob.png" alt=""></div>
+                <div class="companion" id="companion2"><img src="image/alpha/alpha1.png" alt=""></div>
             </div>
         </div>
 
@@ -43,14 +38,16 @@
                 <h2>Informations du Joueur</h2>
                 <label for="levelSelect">Niveau:</label>
                 <span id="leveltexte" >1</span>
+                    
             </div>
+            <audio controls loop autoplay>
+                <source src="son/math1.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
         </div>
     </div>
-    <!-- Ajoutez votre script JavaScript -->
-    <script src="js/pendu1.js"></script>
-</body>
-<script>
-  
-</script>
+    <a href="index.html" class="back-button">Retour</a>
+    <script src="js/alpha1.js"></script>
 
+</body>
 </html>

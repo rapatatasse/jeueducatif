@@ -12,7 +12,7 @@ function loadRewards() {
     rewards.recompense.forEach((reward, index) => {
         const rewardDiv = document.getElementById(`reward${index + 1}`);
         if (rewardDiv) {
-            rewardDiv.style.backgroundImage = `url('image/math/${reward}')`;
+            rewardDiv.style.backgroundImage = `url('image/${reward}')`;
         }
     });
     clearRewardsButton.addEventListener('click', () => {
@@ -25,7 +25,7 @@ function loadRewards() {
 function hiddenButtonOnMap() {
         const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
         // Vérifiez si "math1.png" est dans les récompenses
-        if (rewards.recompense.includes("math1.png")) {
+        if (rewards.recompense.includes("math.n1.d1.png") || rewards.recompense.includes("math.n1.d2.png")) {
             // Sélectionnez l'élément <a>
             const aElement = document.getElementById('linkmath2');
             
@@ -33,5 +33,10 @@ function hiddenButtonOnMap() {
             if (aElement) {
                 aElement.style.display = "block";
             }
+            const textElement = document.querySelector('#linkmath1 text');
+            // Vérifiez si l'élément texte existe avant de le modifier
+            if (textElement) {
+                textElement.textContent = '2';
+}
         }
 }

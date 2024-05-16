@@ -36,7 +36,7 @@ body {
     vertical-align: center;
 }
 
-.addition {
+.question {
     font-size: 50px;
     font-weight: bold;
     color: #7c0000;
@@ -52,10 +52,10 @@ body {
 }
 
 .answers button {
-    height: 8vh;
-    width: 8vh;
+    height: 9vh;
+    width: 12vh;
     font-size: 3vh;
-    margin: 5px;
+    margin: 8px;
     padding: 10px;
     border-radius: 15%;
     cursor: pointer;
@@ -133,6 +133,41 @@ body {
 .p-20 {
     padding: 20px;
 }
+
+:root {
+    --success: #00b894;
+    --progress: #e17055;
+  }
+
+.temps {
+width: 0%;
+}
+
+.progressbar-wrapper {
+    background-color: #dfe6e9;
+    color: white;
+    border-radius: 15px;
+    width: 100%;
+  }
+  
+  .progressbar {
+    background-color: var(--progress);
+    color: white;
+    padding: 1rem;
+    text-align: right;
+    font-size: 20px;
+    border-radius: 15px;
+  }
+  
+  .progressbar[title="downloading"] {
+     background-color: var(--progress);
+  }
+  
+  .progressbar[title="downloaded"] {
+     background-color: var(--success);
+  }
+
+
 
 
 
