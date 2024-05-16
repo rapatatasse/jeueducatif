@@ -12,8 +12,8 @@ body {
     background-size: cover;
     justify-content: center;
     align-items: center;
-    
 }
+
 .game-container {
     margin: 0 auto;
     display: flex;
@@ -22,20 +22,26 @@ body {
     height: 70vh;
 }
 
-
 .column {
     flex: 0 0 30%;
     position: relative;
 }
 
-.companion img {
-    width: 100%;
-    height: 100%;
+.companion1 img {
+    width: 85%;
+    height: 85%;
+    margin-top: 40px;
+}
+
+.companion2 img {
+    width: 80%;
+    height: 80%;
 }
 
 .center-container {
     text-align: center;
     vertical-align: center;
+    margin-top: 60px;
 }
 
 .answers {
@@ -52,7 +58,7 @@ body {
     padding: 10px;
     border-radius: 15%;
     cursor: pointer;
-    background-color: rgb(1, 142, 142);
+    background-color: rgb(134, 9, 218);
     color: azure;
 }
 
@@ -61,6 +67,7 @@ body {
     font-size: 50px;
     height: 60px;
     color: #be0404;
+    margin-top: 30px;
    
 }
 
@@ -100,8 +107,8 @@ body {
     font-size: 20px;
     flex: 1;
     margin-left: 10px;
-    text-align: right;
-    color: rgb(255, 230, 0);
+    text-align: center;
+    color: rgb(251, 255, 0);
 }
 
 #levelSelect {

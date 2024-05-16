@@ -22,7 +22,6 @@ function loadLastPokemonReward() {
     }
 }
 
-
 function startGame() {
     resetLives(); 
     generateQuestion();
