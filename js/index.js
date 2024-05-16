@@ -25,7 +25,7 @@ function loadRewards() {
 function hiddenButtonOnMap() {
         const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
         // Vérifiez si "math1.png" est dans les récompenses
-        if (rewards.recompense.includes("math.n1.d1.png")) {
+        if (rewards.recompense.includes("math.n1.d1.png") || rewards.recompense.includes("math.n1.d2.png")) {
             // Sélectionnez l'élément <a>
             const aElement = document.getElementById('linkmath2');
             
