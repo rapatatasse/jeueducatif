@@ -52,10 +52,10 @@ body {
 }
 
 .answers button {
-    height: 8vh;
-    width: 8vh;
+    height: 9vh;
+    width: 12vh;
     font-size: 3vh;
-    margin: 5px;
+    margin: 8px;
     padding: 10px;
     border-radius: 15%;
     cursor: pointer;
@@ -166,6 +166,8 @@ width: 0%;
   .progressbar[title="downloaded"] {
      background-color: var(--success);
   }
+
+
 
 
 
