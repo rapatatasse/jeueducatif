@@ -30,8 +30,8 @@ function startGame() {
 }
 
 function checkAnswer(playerAnswer) {
-    
-    const correctAnswer = parseInt(document.getElementById('addition').getAttribute('data-answer'));
+    const correctAnswer = document.getElementById('questionimage').getAttribute('data-answer');
+    console.log("reponse donner : " + playerAnswer + " reponse correcte : " + correctAnswer );
 
     if (!isNaN(playerAnswer)) {
         if (playerAnswer === correctAnswer) {
@@ -94,7 +94,7 @@ function generateQuestion() {
     var randomIndex = Math.floor(Math.random() * tableauimage.length);
     // Met à jour la source de l'image avec l'image aléatoire
     document.getElementById('questionimage').src = tableauimage[randomIndex];
-    document.getElementById('addition').setAttribute('data-answer', correctAnswer);
+    document.getElementById('questionimage').setAttribute('data-answer', tableauimage[randomIndex]);
 }
 
 // Appelle la fonction generateQuestion() pour générer une question au démarrage ou à chaque fois que nécessaire
