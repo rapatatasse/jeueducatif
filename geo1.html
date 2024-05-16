@@ -14,32 +14,36 @@
                 <div class="life-bar" id="playerLifeBar">❤❤❤❤❤</div>
                 <div class="companion" id="companion1"><img src="image/companion1.png" alt="Pokemon 1"></div>
             </div>
+            <br>
             <div class="column center-container">
-                <div class="addition" id="addition">?</div>
+                <div class="addition" >
+                    <img id="questionimage" src="image/france.png" alt="Joueur Image">
+                </div>
+                <br><br>
                 <div class="">
-                    <div></div>
                     <div class="answers">
-                        <button onclick="checkAnswer(1)">France</button>
-                        <button onclick="checkAnswer(2)">Italie</button>
-                        <button onclick="checkAnswer(3)">USA</button>
-                        <button onclick="checkAnswer(4)">Allemagne</button>
+                        <button onclick="checkAnswer(france)">France</button>
+                        <button onclick="checkAnswer(italie)">Italie</button>
+                        <button onclick="checkAnswer(etats-unis)">Etats-Unis</button>
+                        <button onclick="checkAnswer(allemagne)">Allemagne</button>
                     </div>
                     <div id="result-message"></div>
                 </div>
             </div>
             <div class="column">
                 <div class="life-bar" id="opponentLifeBar">❤❤❤❤❤</div>
-                <div class="companion" id="companion2"><img src="image/geo1.png" alt=""></div>
+                <div class="companion" id="companion2"><img src="image/joueur.png" alt=""></div>
             </div>
         </div>
 
         <div class="bottom-card p-10">
-            <img src="image/joueur.png" alt="Joueur Image">
             <div class="player-info">
-                <h2>Informations du Joueur</h2>
-                <label for="levelSelect">Niveau:</label>
-                <span id="leveltexte" >1</span>
-                    
+                    <h2>Informations du Joueur</h2>
+                    <label for="levelSelect">Niveau:</label>
+                    <span id="leveltexte" >1</span>
+                <div class="texte-haut-droite">
+                    <a href="index.html" class="backbutton">Retour</a> 
+                </div>
             </div>
         </div>
     </div>

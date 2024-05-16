@@ -1,6 +1,7 @@
 let level = 1;
 let playerLives = 5;
 let opponentLives = 1;
+let tableauimage =["image/france.png", "image/italie.png", "image/etats-unis.png", "image/allemagne.png"]
 
 document.addEventListener('DOMContentLoaded', () => {
     startGame();
@@ -29,6 +30,7 @@ function startGame() {
 }
 
 function checkAnswer(playerAnswer) {
+    
     const correctAnswer = parseInt(document.getElementById('addition').getAttribute('data-answer'));
 
     if (!isNaN(playerAnswer)) {
@@ -88,15 +90,15 @@ function updateLifeBar(lifeBarId, lives) {
 }
 
 function generateQuestion() {
-    const maxSum = level === 1 ? 5 : (level === 2 ? 8 : 10);
-    console.log("level"+level)
-    const num1 = Math.floor(Math.random() * (maxSum - 1)) + 1;
-    const num2 = Math.floor(Math.random() * (maxSum - num1 )) + 1;
-    const correctAnswer = num1 + num2;
-
-    document.getElementById('addition').innerText = `${num1} + ${num2} = ?`;
+    // Génère un index aléatoire pour choisir une image dans le tableau
+    var randomIndex = Math.floor(Math.random() * tableauimage.length);
+    // Met à jour la source de l'image avec l'image aléatoire
+    document.getElementById('questionimage').src = tableauimage[randomIndex];
     document.getElementById('addition').setAttribute('data-answer', correctAnswer);
 }
+
+// Appelle la fonction generateQuestion() pour générer une question au démarrage ou à chaque fois que nécessaire
+generateQuestion();
 
 function displayResultMessage(isPlayerWinner) {
     const resultMessage = document.getElementById('result-message');
