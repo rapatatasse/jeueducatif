@@ -1,150 +1,100 @@
+const wordImages = [
+    { word: "Etats-unis", image: "image/etats-unis.png" },
+    { word: "France", image: "image/france.png" },
+    { word: "Allemagne", image: "image/allemagne.png" },
+    { word: "Italie", image: "image/italie.png" }
+];
+
 let level = 1;
 let playerLives = 5;
-let opponentLives = 1;
-let tableauimage =["image/france.png", "image/italie.png", "image/etats-unis.png", "image/allemagne.png"]
+let opponentLives = 5;
+let currentWordIndex;
 
-document.addEventListener('DOMContentLoaded', () => {
-    startGame();
-    loadLastPokemonReward();
-});
-function loadLastPokemonReward() {
-    const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
+function generateQuestion() {
+    const buttonsContainer = document.getElementById('buttonsContainer');
+    buttonsContainer.innerHTML = '';
 
-    const lastReward = rewards.recompense.length > 0 ? rewards.recompense[rewards.recompense.length - 1] : null;
+    currentWordIndex = Math.floor(Math.random() * wordImages.length);
+    const currentWord = wordImages[currentWordIndex];
 
-    if (lastReward) {
-        const companionImage = document.getElementById('companion1').querySelector('img');
-        companionImage.src = `image/${lastReward}`;
+    document.getElementById('wordImage').src = currentWord.image;
+
+    const answerOptions = [];
+
+    answerOptions.push(currentWord.word);
+
+    while (answerOptions.length < 4) {
+        const randomIndex = Math.floor(Math.random() * wordImages.length);
+        const randomWord = wordImages[randomIndex].word;
+        if (!answerOptions.includes(randomWord)) {
+            answerOptions.push(randomWord);
+        }
+    }
+
+    const shuffledOptions = shuffle(answerOptions);
+
+    shuffledOptions.forEach(function(option) {
+        const button = document.createElement('button');
+        button.textContent = option.charAt(0).toUpperCase() + option.slice(1);
+        button.setAttribute('onclick', `checkAnswer('${option}')`);
+        buttonsContainer.appendChild(button);
+    });
+}
+
+function checkAnswer(selectedAnswer) {
+    const correctAnswer = wordImages[currentWordIndex].word;
+
+    if (selectedAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        opponentLives--;
+        updateLifeBar('opponentLifeBar', opponentLives);
     } else {
-        // Si aucune récompense n'est stockée, utilisez l'image de companion1.png
-        const companionImage = document.getElementById('companion1').querySelector('img');
-        companionImage.src = 'image/monstre1.png';
+        playerLives--;
+        updateLifeBar('playerLifeBar', playerLives);
+    }
+
+    if (opponentLives <= 0) {
+        if (level < 3) {
+            level++;
+            updateLevelText(level);
+            resetGame();
+        } else {
+            displayResultMessage(true);
+        }
+    } else if (playerLives <= 0) {
+        displayResultMessage(false);
+    } else {
+        generateQuestion();
     }
 }
 
-function startGame() {
-    resetLives(); 
-    generateQuestion();
-    clearResultMessage();
-}
-
-function checkAnswer(playerAnswer) {
-    const correctAnswer = document.getElementById('questionimage').getAttribute('data-answer');
-    console.log("reponse donner : " + playerAnswer + " reponse correcte : " + correctAnswer );
-
-    if (!isNaN(playerAnswer)) {
-        if (playerAnswer === correctAnswer) {
-            opponentLives--;
-
-            // Mise à jour de la vie de l'adversaire dans l'interface
-            updateLifeBar('opponentLifeBar', opponentLives);
-        } else {
-            playerLives--;
-
-            // Mise à jour de la vie du joueur dans l'interface
-            updateLifeBar('playerLifeBar', playerLives);
-        }
-
-        if (opponentLives <= 0) {
-            if (level < 3) {
-                level++;
-                changePokemonImage(level);
-                updateleveltexte(level);
-                startGame();
-            } else {
-                displayResultMessage(true);
-            }
-        } else if (playerLives <= 0) {
-            displayResultMessage(false);
-        } else {
-            generateQuestion();
-        }
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
-}
-
-function updateleveltexte(level) {
-    const leveltexte = document.getElementById('leveltexte');
-    leveltexte.innerText = level;
-}
-
-
-function changePokemonImage(level) {
-    const companionImage = document.getElementById('companion2').querySelector('img');
-    companionImage.src = `image/geo${level}.png`;
-}
-
-function resetLives() {
-    playerLives = 5;
-    opponentLives = 1;
-
-    // Mettez à jour les barres de vie dans l'interface
-    updateLifeBar('playerLifeBar', playerLives);
-    updateLifeBar('opponentLifeBar', opponentLives);
+    return array;
 }
 
 function updateLifeBar(lifeBarId, lives) {
     const lifeBar = document.getElementById(lifeBarId);
-    const hearts = '❤'.repeat(lives);
-    lifeBar.innerText = hearts;
+    lifeBar.innerText = '❤'.repeat(lives);
 }
 
-function generateQuestion() {
-    // Génère un index aléatoire pour choisir une image dans le tableau
-    var randomIndex = Math.floor(Math.random() * tableauimage.length);
-    // Met à jour la source de l'image avec l'image aléatoire
-    document.getElementById('questionimage').src = tableauimage[randomIndex];
-    document.getElementById('questionimage').setAttribute('data-answer', tableauimage[randomIndex]);
+function updateLevelText(level) {
+    document.getElementById('leveltexte').innerText = level;
 }
 
-// Appelle la fonction generateQuestion() pour générer une question au démarrage ou à chaque fois que nécessaire
-generateQuestion();
-
-function displayResultMessage(isPlayerWinner) {
+function displayResultMessage(isWinner) {
     const resultMessage = document.getElementById('result-message');
-    const backButton = document.createElement('button');
-    backButton.innerText = 'Retour à la carte';
-    backButton.classList.add('backbutton');
-    backButton.addEventListener('click', () => {
-        window.location.href = 'index.html';
-    });
-
-    resultMessage.style.fontSize = '30px';
-    resultMessage.style.fontWeight = 'bold';
-    resultMessage.style.marginTop = '20px';
-
-    if (isPlayerWinner) {
-        resultMessage.style.color = 'green';
-        if (level < 3) {
-            resultMessage.innerText = 'Bravo!';
-            gamesWon.innerText =  Math.floor(gamesWon.innerText) + 1;
-        } else {
-            resultMessage.innerText = 'Bravo! Vous avez atteint le niveau maximum.';
-            // Stocker la récompense dans le cache
-            const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
-            rewards.recompense.push(`geo1.png`);
-            localStorage.setItem('rewards', JSON.stringify(rewards));
-            // Ajouter le bouton de retour
-            resultMessage.appendChild(backButton);
-        }
-    } else {
-        resultMessage.style.color = 'red';
-        resultMessage.innerText = 'Perdu pour cette fois. Recommencez!';
-        // Supprimer la dernière récompense du JSON
-        const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
-        if (rewards.recompense.length > 0) {
-            rewards.recompense.pop(); // Supprimer la dernière récompense
-            localStorage.setItem('rewards', JSON.stringify(rewards));
-        }
-        resultMessage.appendChild(backButton);
-    }
+    resultMessage.innerText = isWinner ? "Bravo ! Vous avez gagné !" : "Désolé, vous avez perdu. Essayez à nouveau !";
 }
 
-
-function clearResultMessage() {
-    document.getElementById('result-message').innerText = '';
+function resetGame() {
+    playerLives = 5;
+    opponentLives = 5;
+    updateLifeBar('playerLifeBar', playerLives);
+    updateLifeBar('opponentLifeBar', opponentLives);
+    generateQuestion();
 }
 
-// Initial setup
-document.addEventListener('DOMContentLoaded', () => {
-    startGame();
-});
+document.addEventListener('DOMContentLoaded', generateQuestion);

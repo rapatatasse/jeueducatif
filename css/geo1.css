@@ -2,128 +2,28 @@ body {
     margin: 0;
     font-family: 'Arial', sans-serif;
 }
+
 .container {
-    position: relative;
-    width: 100%;
-    text-align: center;
-    /*hauteur a 100% de l'hauteur de l'écran*/
-    height: 100vh;
     background-image: url('../image/fond1.jpg');
     background-position: bottom;
-    background-size: cover;
-    justify-content: center;
-    align-items: center;
 }
 
-.game-container {
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    width: 95%;
-    height: 70vh;
-}
-
-.column {
-    flex: 0 0 30%;
-    position: relative;
-}
-
-.companion1 img {
-    width: 85%;
-    height: 85%;
-    margin-top: 40px;
-}
-
-.companion2 img {
-    width: 80%;
-    height: 80%;
+.yellow-text {
+    color: yellow;
 }
 
 .center-container {
-    text-align: center;
-    vertical-align: center;
-    margin-top: 60px;
+    position: relative;
+    top: 130px
 }
 
 .answers {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    position: relative;
+    top: 40px
 }
 
 .answers button {
-    height: 10vh;
-    width: 20vh;
-    font-size: 3vh;
-    margin: 5px;
-    padding: 10px;
-    border-radius: 15%;
-    cursor: pointer;
-    background-color: rgb(134, 9, 218);
-    color: azure;
-}
-
-
-.life-bar {
-    font-size: 50px;
-    height: 60px;
-    color: #be0404;
-    margin-top: 30px;
-   
-}
-
-.buttonlancer {
-    font-size: 20px;
-    padding: 10px 20px;
-    margin-top: 10px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-.backbutton {
-    font-size: 20px;
-    padding: 10px 20px;
-    margin-top: 10px;
-    cursor: pointer;
-    background-color: #5900ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-
-.texte-haut-droite {
-    position: absolute;
-    top: 35px;
-    right: 25px;
-}
-
-.bottom-card img {
-    height: 80%; 
-    border-radius: 5px;
-}
-
-.player-info {
-    font-size: 20px;
-    flex: 1;
-    margin-left: 10px;
-    text-align: center;
-    color: rgb(251, 255, 0);
-}
-
-#levelSelect {
-    background-color: aquamarine;
-    height: 30px;
-    width: 150px;
-    font-size: 20px;
-    border-radius: 15px;
-    padding: 5px;
-    border: 1px solid #ccc;
-}
-.p-10 {
-    padding: 10px;
-}
-.p-20 {
-    padding: 20px;
+    height: 9.5vh !important;
+    width: 17vh !important;
+    background-color: rgb(119, 0, 255) !important;
 }
