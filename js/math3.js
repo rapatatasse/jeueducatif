@@ -13,7 +13,7 @@ function loadLastPokemonReward() {
 
     if (lastReward) {
         const companionImage = document.getElementById('companion1').querySelector('img');
-        companionImage.src = `image/math/${lastReward}`;
+        companionImage.src = `image/${lastReward}`;
     } else {
         // Si aucune récompense n'est stockée, utilisez l'image de companion1.png
         const companionImage = document.getElementById('companion1').querySelector('img');

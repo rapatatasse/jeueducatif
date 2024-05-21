@@ -22,7 +22,7 @@ function loadLastPokemonReward() {
 
     if (lastReward) {
         const companionImage = document.getElementById('companion1').querySelector('img');
-        companionImage.src = `image/alpha/${lastReward}`;
+        companionImage.src = `image/${lastReward}`;
     } else {
         // Si aucune récompense n'est stockée, utilisez l'image de companion1.png
         const companionImage = document.getElementById('companion1').querySelector('img');
@@ -74,14 +74,12 @@ function updateleveltexte(level) {
 
 function changePokemonImage(level) {
     const companionImage = document.getElementById('companion2').querySelector('img');
-   
     companionImage.src = `image/alpha/alpha${level}.png`;
-   
 }
 
 function resetLives() {
     playerLives = 5;
-    opponentLives = 5;
+    opponentLives = 1;
 
     // Mettez à jour les barres de vie dans l'interface
     updateLifeBar('playerLifeBar', playerLives);
