@@ -118,10 +118,10 @@ function updateleveltexte(level) {
 function changePokemonImage(level) {
     const companionImage = document.getElementById('companion2').querySelector('img');
     if (varniveaudecarte === 1) {
-        companionImage.src = `image/math.n1.d${level}.png`;
+        companionImage.src = `math.n1.d${level}.png`;
     }
     else if (varniveaudecarte === 2) {
-        companionImage.src = `image/math.n2.d${level}.png`;
+        companionImage.src = `math.n2.d${level}.png`;
     }
 }
 
