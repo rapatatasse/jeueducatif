@@ -1,4 +1,39 @@
 
 .container {
     background-image: url('../image/math/fondmath2.png');
+    background-position: bottom;
+}
+.answers {
+    background-color: #f2f2f2; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; /* Centre les éléments verticalement */
+}
+
+.answers input[type="text"] {
+    width: 70%; 
+    padding: 10px; /* Espacement intérieur pour augmenter la zone de clic */
+    border: 2px solid #ccc; /* Bordure subtile pour le champ de texte */
+    border-radius: 4px; /* Bords arrondis pour le champ de texte */
+}
+
+.answers button {
+    padding: 10px 20px; /* Espacement intérieur pour rendre le bouton plus cliquable */
+    background-color: #4CAF50; /* Couleur de fond pour le bouton */
+    color: white; /* Couleur du texte pour le bouton */
+    border: none; /* Aucune bordure pour le bouton */
+    border-radius: 4px; /* Bords arrondis pour le bouton */
+    cursor: pointer; /* Change le curseur en une main lorsque vous survolez le bouton */
+    transition: background-color 0.3s; /* Animation de fond lorsque le bouton est survolé ou cliqué */
+}
+
+.answers button:hover {
+    background-color: #45a049; /* Changement de couleur lors du survol */
+}
+
+.answers input[type="text"]:focus {
+    border-color: #4CAF50; /* Changement de la couleur de la bordure lorsque l'input est actif */
 }
