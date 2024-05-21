@@ -1,5 +1,5 @@
 // Liste de mots pour le jeu du pendu
-const hangmanWords = ["Maison", "Chien", "Arbre", "Soleil", "Fleur", "École", "Vélo"];
+const hangmanWords = ["maison", "chien", "Arbre", "Soleil", "Fleurs", "ecole", "velo"];
 let level = 1;
 let playerLives = 5;
 let opponentLives = 5;
@@ -7,13 +7,13 @@ let opponentLives = 5;
 
 // Chemins d'accès des images associées aux mots
 const wordImages = {
-    "Maison": "image/pendu/maison.jpg",
-    "Chien": "image/pendu/chien.jpg",
+    "maison": "image/pendu/maison.jpg",
+    "chien": "image/pendu/chien.jpg",
     "Arbre": "image/pendu/Arbre.jpg",
     "Soleil": "image/pendu/Soleil.png",
-    "Fleur": "image/pendu/Fleurs.jpg",
+    "Fleurs": "image/pendu/Fleurs.jpg",
     "ecole": "image/pendu/ecole.jpg",
-    "Vélo": "image/pendu/velo.jpg"
+    "velo": "image/pendu/velo.jpg"
 };
 
 function generateQuestion() {
@@ -136,3 +136,44 @@ function updateLifeBar(lifeBarId, lives) {
 // Appel de la fonction d'initialisation du jeu du pendu au chargement de la page
 document.addEventListener('DOMContentLoaded', initializeHangmanGame);
 generateQuestion()
+// Fonction pour mettre à jour l'image en fonction de la réponse correcte
+function updateImage(correctAnswer) {
+    let newImagePath = ""; // Chemin d'accès de la nouvelle image
+
+    // Déterminez quelle image afficher en fonction de la réponse correcte
+    switch (correctAnswer.toLowerCase()) {
+        case "maison":
+            newImagePath = "image/pendu/maison.jpg";
+            break;
+        case "chien":
+            newImagePath = "image/pendu/chien.jpg";
+            break;
+        case "arbre":
+            newImagePath = "image/pendu/arbre.jpg";
+            break;
+        // Ajoutez d'autres cas pour d'autres réponses correctes et images
+        default:
+            // Par défaut, utilisez une image générique ou l'image actuelle
+            newImagePath = "image/pendu/default.jpg";
+            break;
+    }
+
+    // Mettez à jour l'élément d'image avec le nouveau chemin d'accès
+    const imageElement = document.getElementById("wordImage");
+    imageElement.src = newImagePath;
+}
+
+// Utilisation de la fonction dans votre fonction de vérification de réponse
+function checkAnswer(playerAnswer) {
+    // Obtenez la réponse correcte en fonction de l'image actuelle
+    const correctAnswer = document.getElementById("wordImage").alt;
+
+    // Vérifiez si la réponse du joueur correspond à la réponse correcte
+    if (playerAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        // Si la réponse est correcte, mettez à jour l'image
+        updateImage(correctAnswer);
+        // Autres actions à effectuer pour une réponse correcte
+    } else {
+        // Autres actions à effectuer pour une réponse incorrecte
+    }
+}

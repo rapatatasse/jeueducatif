@@ -1,5 +1,5 @@
-var words = ["chat", "chien", "maison", "arbre", "soleil", "fleur", "école", "vélo"];
-var images = ["chat.jpg", "image/pendu/chien.jpg", "maison.jpg", "arbre.jpg", "soleil.jpg", "fleur.jpg", "école.jpg", "vélo.jpg"];
+var words = ["maison", "chien", "Arbre", "Soleil", "Fleurs", "ecole", "velo"];
+var images = ["image/pendu/maison.jpg", "image/pendu/chien.jpg", "image/pendu/Arbre.jpg", "image/pendu/Soleil.png", "image/pendu/Fleurs.jpg", "image/pendu/ecole.jpg", "image/pendu/velo.jpg"];
 
 var randomIndex = Math.floor(Math.random() * words.length);
 var randomWord = words[randomIndex].toUpperCase(); // Convertir en majuscules pour l'affichage
@@ -9,7 +9,7 @@ document.getElementById("addition").textContent = randomWord;
 
 // Charger l'image aléatoire
 var img = document.getElementById("wordImage");
-img.src = "image/" + randomImage;
+img.src = "image/pendu/" + randomImage;
 
 function checkWord(word) {
     var selectedWord = word.toUpperCase(); // Convertir en majuscules pour la comparaison

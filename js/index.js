@@ -23,6 +23,7 @@ function loadRewards() {
     });
 }
 function hiddenButtonOnMap() {
+
         const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
         // Vérifiez si "math1.png" est dans les récompenses
         if (rewards.recompense.includes("math.n1.d1.png") || rewards.recompense.includes("math.n1.d2.png")) {
@@ -37,6 +38,16 @@ function hiddenButtonOnMap() {
             // Vérifiez si l'élément texte existe avant de le modifier
             if (textElement) {
                 textElement.textContent = '2';
-}
+                  // Vérifiez si "math.n2.1.png" est dans les récompenses
+            }
+              if (rewards.recompense.includes("math.n2.1.png")) {
+              // Sélectionnez l'élément <a> pour "math.n2.1.png"
+              const aElementMathN21 = document.getElementById('linkmath3');
+              // Affichez l'élément en définissant son style display sur "block"
+              if (aElementMathN21) {
+                  aElementMathN21.style.display = "block";
+            }
+
         }
+    }
 }
