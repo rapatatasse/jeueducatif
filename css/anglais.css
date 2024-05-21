@@ -1,0 +1,139 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    height: 100vh;
+    background-image: url('../image/fond.jpg');
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-container {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    height: 70vh;
+}
+
+.column {
+    flex: 0 0 30%;
+    position: relative;
+}
+
+.companion img {
+    width: 100%;
+    height: 100%;
+}
+
+.center-container {
+    text-align: center;
+    vertical-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.question {
+    font-size: 30px;
+    font-weight: bold;
+    color: #7c0000;
+    margin-bottom: 20px;
+    background-color: rgba(25, 243, 0, 0.432);
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.answers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.answers button {
+    height: 8vh;
+    width: 8vh;
+    font-size: 3vh;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 15%;
+    cursor: pointer;
+    background-color: rgb(1, 142, 142);
+    color: azure;
+    border: none;
+}
+
+.life-bar {
+    font-size: 50px;
+    height: 60px;
+    color: #be0404;
+}
+
+.result-message {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.backbutton {
+    font-size: 20px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.bottom-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8); 
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 20px auto;
+    padding: 10px;
+    width: 70%;
+    height: 20vh;
+}
+
+.bottom-card img {
+    height: 80%; 
+    border-radius: 5px;
+}
+
+.player-info {
+    font-size: 20px;
+    flex: 1;
+    margin-left: 10px;
+    color: rgb(46, 72, 121);
+}
+
+#levelSelect {
+    background-color: aquamarine;
+    height: 30px;
+    width: 150px;
+    font-size: 20px;
+    border-radius: 15px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+.p-20 {
+    padding: 20px;
+}

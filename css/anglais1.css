@@ -1,0 +1,32 @@
+
+.container {
+
+    background-image: url('../image/fond.jpg');
+
+    
+}
+#choices button {
+    height: 8vh;
+    font-size: 3vh;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 15%;
+    cursor: pointer;
+    background-color: rgb(1, 142, 142);
+    color: azure;
+}
+
+#question {
+    font-size: 50px;
+    font-weight: bold;
+    color: #7c0000;
+    margin-bottom: 20px;
+    background-color: rgba(234, 239, 234, 0.993);
+    border-radius: 15px;
+}
+
+#result {
+    font-size: 50px;
+    font-weight: bold;
+    color: #043f13;
+}
