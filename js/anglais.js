@@ -1,152 +1,209 @@
 let level = 1;
 let playerLives = 5;
-let opponentLives = 1;
-
+let opponentLives = 2;
+let dernierquestion = "";
 document.addEventListener('DOMContentLoaded', () => {
     startGame();
-    loadLastWordReward();
+    loadLastPokemonReward();
 });
+// Liste de mots anglais et leurs traductions en français
+const mots = {
+    "cat": "chat",
+    "dog": "chien",
+    "bird": "oiseau",
+    "tree": "arbre",
+    "house": "maison",
+    "car": "voiture",
+    "book": "livre",
+    "computer": "ordinateur",
+    "sun": "soleil",
+    "moon": "lune",
+    "water": "eau",
+    "flower": "fleur",
+    "chair": "chaise",
+    "table": "table",
+    "music": "musique",
+    "pen": "stylo",
+    "phone": "téléphone",
+    "shoes": "chaussures",
+    "hat": "chapeau",
+    "cloud": "nuage"
+};
 
-function loadLastWordReward() {
+function startGame() {
+    resetLives();
+    clearResultMessage();
+}
+
+function loadLastPokemonReward() {
     const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
 
     const lastReward = rewards.recompense.length > 0 ? rewards.recompense[rewards.recompense.length - 1] : null;
 
     if (lastReward) {
-        const wordImage = document.getElementById('word').querySelector('img');
-        wordImage.src = `image/${lastReward}`;
+        const companionImage = document.getElementById('companion1').querySelector('img');
+        companionImage.src = `image/${lastReward}`;
     } else {
-        const wordImage = document.getElementById('word').querySelector('img');
-        wordImage.src = 'image/word1.png';
+        // Si aucune récompense n'est stockée, utilisez l'image de companion1.png
+        const companionImage = document.getElementById('companion1').querySelector('img');
+        companionImage.src = 'image/companion1.png';
     }
-}
-
-function startGame() {
-    resetLives(); 
-    generateQuestion();
-    clearResultMessage();
-}
-
-function checkAnswer(playerAnswer) {
-    const correctAnswerIndex = parseInt(document.getElementById('translation').getAttribute('data-answer'));
-
-    if (!isNaN(playerAnswer)) {
-        if (playerAnswer === correctAnswerIndex) {
-            opponentLives--;
-            updateLifeBar('opponentLifeBar', opponentLives);
-        } else {
-            playerLives--;
-            updateLifeBar('playerLifeBar', playerLives);
-        }
-
-        if (opponentLives <= 0) {
-            if (level < 3) {
-                level++;
-                changeWordImage(level);
-                updateLevelText(level);
-                startGame();
-            } else {
-                displayResultMessage(true);
-            }
-        } else if (playerLives <= 0) {
-            displayResultMessage(false);
-        } else {
-            generateQuestion();
-        }
-    }
-}
-
-
-function updateLevelText(level) {
-    const levelText = document.getElementById('leveltext');
-    levelText.innerText = level;
-}
-
-function changeWordImage(level) {
-    const wordImage = document.getElementById('word').querySelector('img');
-    wordImage.src = `image/word${level}.png`;
 }
 
 function resetLives() {
     playerLives = 5;
-    opponentLives = 1;
+    opponentLives = 2;
+
+    // Mettez à jour les barres de vie dans l'interface
     updateLifeBar('playerLifeBar', playerLives);
     updateLifeBar('opponentLifeBar', opponentLives);
 }
 
 function updateLifeBar(lifeBarId, lives) {
+    console.log("updateLifeBar", lifeBarId, lives);
     const lifeBar = document.getElementById(lifeBarId);
     const hearts = '❤'.repeat(lives);
     lifeBar.innerText = hearts;
 }
 
-// Fonction pour générer les options avec des événements de clic
-function generateOptions(options) {
-    const optionsList = document.getElementById('options');
-    optionsList.innerHTML = '';
+// Mélange aléatoire des mots
+const motsAnglais = Object.keys(mots);
+const motsMelanges = shuffle(motsAnglais);
 
-    options.forEach((option, index) => {
-        const button = document.createElement('button');
-        button.innerText = option;
-        button.addEventListener('click', () => checkAnswer(index + 1)); // Ajoute 1 pour obtenir la réponse correcte
-        optionsList.appendChild(button);
+let currentQuestionIndex = 0;
+
+// Fonction pour mélanger un tableau
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Affiche la question actuelle
+function afficherQuestion() {
+    const motAnglais = motsMelanges[currentQuestionIndex];
+    const traductionCorrecte = mots[motAnglais];
+    const choixIncorrects = Object.values(mots).filter(mot => mot !== traductionCorrecte);
+    const choixAleatoires = getRandomChoices(choixIncorrects, 3);
+    const choix = shuffle([traductionCorrecte, ...choixAleatoires]);
+
+    while (motAnglais === dernierquestion) {
+        motAnglais = motsMelanges[currentQuestionIndex];
+    }
+    document.getElementById('question').innerHTML = `Quelle est la traduction de "${motAnglais}" en français ?`;
+    document.getElementById('choices').innerHTML = '';
+
+    choix.forEach(traduction => {
+        const bouton = document.createElement('button');
+        bouton.innerHTML = traduction;
+        bouton.onclick = function() {
+            verifierReponse(traduction === traductionCorrecte);
+        };
+        document.getElementById('choices').appendChild(bouton);
     });
 }
 
-// Modifier la fonction generateQuestion pour inclure les options
-function generateQuestion() {
-    const words = [
-        { french: 'chat', options: ['dog', 'cat', 'bird', 'fish'], answer: 2 },
-        { french: 'arbre', options: ['tree', 'flower', 'rock', 'grass'], answer: 1 },
-        { french: 'voiture', options: ['car', 'bike', 'bus', 'train'], answer: 1 }
-        // Ajoutez plus de mots avec leurs traductions et réponses ici
-    ];
-
-    const randomIndex = Math.floor(Math.random() * words.length);
-    const question = words[randomIndex];
-    const correctAnswerIndex = question.answer;
-
-    document.getElementById('question').innerText = `Translate "${question.french}" into English:`;
-
-    // Générer les options avec des événements de clic
-    generateOptions(question.options);
-
-    document.getElementById('translation').setAttribute('data-answer', correctAnswerIndex);
+function getRandomChoices(choices, count) {
+    const shuffledChoices = shuffle(choices);
+    return shuffledChoices.slice(0, count);
 }
+
+
+
+// Vérifie la réponse et affiche le résultat
+function verifierReponse(correct) {
+    if (correct) {
+        document.getElementById('result').innerHTML = "Correct!";
+        opponentLives--;
+        updateLifeBar('opponentLifeBar', opponentLives);
+    } else {
+        document.getElementById('result').innerHTML = "Incorrect.";
+        playerLives--;
+        updateLifeBar('playerLifeBar', playerLives);
+    }
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < motsMelanges.length) {
+        setTimeout(afficherQuestion, 1000); // Affiche la prochaine question après 1 seconde
+    } else {
+        document.getElementById('question').innerHTML = '';
+        document.getElementById('choices').innerHTML = '';
+        document.getElementById('result').innerHTML = '';
+    }
+    console.log("vie opposant"+opponentLives)
+    if (opponentLives <= 0) {
+        if (level < 3) {
+            level++;
+            changePokemonImage(level);
+            updateleveltexte(level);
+            startGame();
+        } else {
+            displayResultMessage(true);
+        }
+    } else if (playerLives <= 0) {
+        displayResultMessage(false);
+    } else {
+        afficherQuestion();
+    }
+}
+
+function updateleveltexte(level) {
+    const leveltexte = document.getElementById('leveltexte');
+    leveltexte.innerText = level;
+}
+function changePokemonImage(level) {
+    const companionImage = document.getElementById('companion2').querySelector('img');
+    companionImage.src = `image/math/anglais${level}.png`;
+    }
 
 function displayResultMessage(isPlayerWinner) {
     const resultMessage = document.getElementById('result-message');
     const backButton = document.createElement('button');
-    backButton.innerText = 'Back to Map';
+    const gamesWon  = document.getElementById('leveltexte');
+    backButton.innerText = 'Retour à la carte';
     backButton.classList.add('backbutton');
     backButton.addEventListener('click', () => {
         window.location.href = 'index.html';
     });
 
-    resultMessage.style.fontSize = '30px';
-    resultMessage.style.fontWeight = 'bold';
-    resultMessage.style.marginTop = '20px';
 
     if (isPlayerWinner) {
+        
         resultMessage.style.color = 'green';
         if (level < 3) {
-            resultMessage.innerText = 'Congratulations!';
-            // Increment games won or store other rewards here
+            resultMessage.innerText = 'Bravo!';
+            gamesWon.innerText =  Math.floor(gamesWon.innerText) + 1;
         } else {
-            resultMessage.innerText = 'Congratulations! You have reached the maximum level.';
-            // Store the reward in cache
             const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
-            rewards.recompense.push(`word1.png`);
-            localStorage.setItem('rewards', JSON.stringify(rewards));
-            resultMessage.appendChild(backButton);
+            
+            if (!rewards.recompense.includes("anglais1.png")) {
+                resultMessage.innerText = 'Bravo! Vous avez atteint le niveau maximum.';
+                var lineBreak = document.createElement('br');
+                resultMessage.appendChild(lineBreak);
+                // Ajouter "math1.png" aux récompenses
+                rewards.recompense.push("anglais1.png");
+                localStorage.setItem('rewards', JSON.stringify(rewards));
+                // Ajouter le bouton de retour
+                resultMessage.appendChild(backButton);
+            } else {
+                resultMessage.innerText = 'Compagnon déjà gagné!';
+                var lineBreak = document.createElement('br');
+                resultMessage.appendChild(lineBreak);
+                resultMessage.appendChild(backButton);
+            }
+
         }
     } else {
         resultMessage.style.color = 'red';
-        resultMessage.innerText = 'Lost this time. Try again!';
-        // Remove the last reward from JSON
+        resultMessage.innerText = 'Perdu pour cette fois. Recommencez!';
+        var lineBreak = document.createElement('br');
+        resultMessage.appendChild(lineBreak);
+        // Supprimer la dernière récompense du JSON
         const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
         if (rewards.recompense.length > 0) {
-            rewards.recompense.pop(); // Remove the last reward
+            rewards.recompense.pop(); // Supprimer la dernière récompense
             localStorage.setItem('rewards', JSON.stringify(rewards));
         }
         resultMessage.appendChild(backButton);
@@ -156,3 +213,5 @@ function displayResultMessage(isPlayerWinner) {
 function clearResultMessage() {
     document.getElementById('result-message').innerText = '';
 }
+// Démarrer le jeu
+afficherQuestion();
