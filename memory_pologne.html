@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Memory Game</title>
+  <link rel="stylesheet" href="css/memory_pologne.css">
+  <script src="js/memory_pologne.js" charset="utf-8"></script>
+</head>
+<body>
+
+  <div class="container">
+    <!-- <h3>Score:<span id="result"></span></h3> -->
+    <div class="grid">
+      <!-- Ici, vous ajoutez les cartes du jeu -->
+    </div>
+    <!-- Image de vie -->
+    <img src="image/pasbeau.png" class="pasbeau" alt="Life">
+    <img src="image/monstre1.png" class="monstre1" alt="Life">
+
+    <div class="bottom-card p-10">
+      <img src="image/joueur.png" alt="Joueur Image">
+      <div class="player-info">
+          <h2>Informations du Joueur</h2>
+          <label for="levelSelect">Niveau:</label>
+          <span id="leveltexte" >3</span>
+          <h3>Score:<span id="result"></span></h3>
+              
+      </div>
+      <audio controls loop autoplay>
+          <source src="son/math1.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+      </audio>
+  </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Sale merde va niquer tes parents gosse de merde</p>
+      </div>
+    </div>
+    
+  </div>
+
+</body>
+</html>
