@@ -1,6 +1,7 @@
 
 .container {
     background-image: url('../image/math/fondmath2.png');
+    background-position: bottom;
 }
 .answers {
     background-color: #f2f2f2; 

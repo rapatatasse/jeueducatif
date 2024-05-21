@@ -1,149 +1,149 @@
+const wordImageseurope = [
+    { word: "Etats-unis", image: "image/geo/etats-unis.png" },
+    { word: "France", image: "image/geo/france.png" },
+    { word: "Allemagne", image: "image/geo/allemagne.png" },
+    { word: "Italie", image: "image/geo/italie.png" }
+];
+
+const wordImagesamerique = [
+    { word: "Canada", image: "image/geo/canada.png" },
+    { word: "Mexique", image: "image/geo/mexique.png" },
+    { word: "Bresil", image: "image/geo/bresil.png" },
+    { word: "Argentine", image: "image/geo/argentine.png" }
+];
+
+const wordImagesasie = [
+    { word: "Chine", image: "image/geo/chine.png" },
+    { word: "Japon", image: "image/geo/japon.png" },
+    { word: "Inde", image: "image/geo/inde.png" },
+    { word: "France", image: "image/geo/france.png" }
+];
+
 let level = 1;
 let playerLives = 5;
-let opponentLives = 1;
+let opponentLives = 5;
+let currentWordIndex;
 
-document.addEventListener('DOMContentLoaded', () => {
-    startGame();
-    loadLastPokemonReward();
-});
-function loadLastPokemonReward() {
-    const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
+function generateQuestion() {
+    const buttonsContainer = document.getElementById('buttonsContainer');
+    buttonsContainer.innerHTML = '';
 
-    const lastReward = rewards.recompense.length > 0 ? rewards.recompense[rewards.recompense.length - 1] : null;
-
-    if (lastReward) {
-        const companionImage = document.getElementById('companion1').querySelector('img');
-        companionImage.src = `image/${lastReward}`;
+    let currentWord;
+    if (level === 1) {
+        currentWordIndex = Math.floor(Math.random() * wordImageseurope.length);
+        currentWord = wordImageseurope[currentWordIndex];
+    } else if (level === 2) {
+        currentWordIndex = Math.floor(Math.random() * wordImagesamerique.length);
+        currentWord = wordImagesamerique[currentWordIndex];
     } else {
-        // Si aucune récompense n'est stockée, utilisez l'image de companion1.png
-        const companionImage = document.getElementById('companion1').querySelector('img');
-        companionImage.src = 'image/companion1.png';
+        currentWordIndex = Math.floor(Math.random() * wordImagesasie.length);
+        currentWord = wordImagesasie[currentWordIndex];
+    }
+
+    document.getElementById('wordImage').src = currentWord.image;
+
+    const answerOptions = [];
+    answerOptions.push(currentWord.word);
+
+    while (answerOptions.length < 4) {
+        const randomIndex = Math.floor(Math.random() * (
+            level === 1 ? wordImageseurope.length : 
+            level === 2 ? wordImagesamerique.length : 
+            wordImagesasie.length));
+        
+        const randomWord = (level === 1 ? wordImageseurope : 
+                            level === 2 ? wordImagesamerique : 
+                            wordImagesasie)[randomIndex].word;
+        
+        if (!answerOptions.includes(randomWord)) {
+            answerOptions.push(randomWord);
+        }
+    }
+
+    const shuffledOptions = shuffle(answerOptions);
+
+    shuffledOptions.forEach(function(option) {
+        const button = document.createElement('button');
+        button.textContent = option.charAt(0).toUpperCase() + option.slice(1);
+        button.setAttribute('onclick', `checkAnswer('${option}')`);
+        buttonsContainer.appendChild(button);
+    });
+
+    changePokemonImage(level);
+}
+
+function checkAnswer(selectedAnswer) {
+    const correctAnswer = (level === 1 ? wordImageseurope : 
+                          level === 2 ? wordImagesamerique : 
+                          wordImagesasie)[currentWordIndex].word;
+
+    if (selectedAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        opponentLives--;
+        updateLifeBar('opponentLifeBar', opponentLives);
+    } else {
+        playerLives--;
+        updateLifeBar('playerLifeBar', playerLives);
+    }
+
+    if (opponentLives <= 0) {
+        if (level < 3) {
+            level++;
+            updateLevelText(level);
+            resetGame();
+        } else {
+            displayResultMessage(true);
+        }
+    } else if (playerLives <= 0) {
+        displayResultMessage(false);
+    } else {
+        generateQuestion();
     }
 }
 
-
-function startGame() {
-    resetLives(); 
-    generateQuestion();
-    clearResultMessage();
-}
-
-function checkAnswer(playerAnswer) {
-    const correctAnswer = parseInt(document.getElementById('addition').getAttribute('data-answer'));
-
-    if (!isNaN(playerAnswer)) {
-        if (playerAnswer === correctAnswer) {
-            opponentLives--;
-
-            // Mise à jour de la vie de l'adversaire dans l'interface
-            updateLifeBar('opponentLifeBar', opponentLives);
-        } else {
-            playerLives--;
-
-            // Mise à jour de la vie du joueur dans l'interface
-            updateLifeBar('playerLifeBar', playerLives);
-        }
-
-        if (opponentLives <= 0) {
-            if (level < 3) {
-                level++;
-                changePokemonImage(level);
-                updateleveltexte(level);
-                startGame();
-            } else {
-                displayResultMessage(true);
-            }
-        } else if (playerLives <= 0) {
-            displayResultMessage(false);
-        } else {
-            generateQuestion();
-        }
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
-}
-
-function updateleveltexte(level) {
-    const leveltexte = document.getElementById('leveltexte');
-    leveltexte.innerText = level;
-}
-
-
-function changePokemonImage(level) {
-    const companionImage = document.getElementById('companion2').querySelector('img');
-    companionImage.src = `image/geo${level}.png`;
-}
-
-function resetLives() {
-    playerLives = 5;
-    opponentLives = 1;
-
-    // Mettez à jour les barres de vie dans l'interface
-    updateLifeBar('playerLifeBar', playerLives);
-    updateLifeBar('opponentLifeBar', opponentLives);
+    return array;
 }
 
 function updateLifeBar(lifeBarId, lives) {
     const lifeBar = document.getElementById(lifeBarId);
-    const hearts = '❤'.repeat(lives);
-    lifeBar.innerText = hearts;
+    lifeBar.innerText = '❤'.repeat(lives);
 }
 
-function generateQuestion() {
-    const maxSum = level === 1 ? 5 : (level === 2 ? 8 : 10);
-    console.log("level"+level)
-    const num1 = Math.floor(Math.random() * (maxSum - 1)) + 1;
-    const num2 = Math.floor(Math.random() * (maxSum - num1 )) + 1;
-    const correctAnswer = num1 + num2;
-
-    document.getElementById('addition').innerText = `${num1} + ${num2} = ?`;
-    document.getElementById('addition').setAttribute('data-answer', correctAnswer);
+function updateLevelText(level) {
+    document.getElementById('leveltexte').innerText = level;
 }
 
 function displayResultMessage(isPlayerWinner) {
     const resultMessage = document.getElementById('result-message');
-    const backButton = document.createElement('button');
-    backButton.innerText = 'Retour à la carte';
-    backButton.classList.add('backbutton');
-    backButton.addEventListener('click', () => {
-        window.location.href = 'index.html';
-    });
+    resultMessage.innerText = isPlayerWinner ? "Bravo ! Vous avez gagné !" : "Désolé, vous avez perdu. Essayez à nouveau !";
+}
 
-    resultMessage.style.fontSize = '30px';
-    resultMessage.style.fontWeight = 'bold';
-    resultMessage.style.marginTop = '20px';
+function resetGame() {
+    playerLives = 5;
+    opponentLives = 5;
+    updateLifeBar('playerLifeBar', playerLives);
+    updateLifeBar('opponentLifeBar', opponentLives);
+    generateQuestion();
+}
 
-    if (isPlayerWinner) {
-        resultMessage.style.color = 'green';
-        if (level < 3) {
-            resultMessage.innerText = 'Bravo!';
-            gamesWon.innerText =  Math.floor(gamesWon.innerText) + 1;
+function changePokemonImage(level) {
+    const pokemonImage = document.getElementById('pokemonImage');
+    const companion2 = document.getElementById('companion2').querySelector('img');
+    if (companion2) {
+        if (level === 1) {
+            companion2.src = 'image/geo/monstre1.png';
+        } else if (level === 2) {
+            companion2.src = 'image/geo/monstre2.png';
         } else {
-            resultMessage.innerText = 'Bravo! Vous avez atteint le niveau maximum.';
-            // Stocker la récompense dans le cache
-            const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
-            rewards.recompense.push(`geo1.png`);
-            localStorage.setItem('rewards', JSON.stringify(rewards));
-            // Ajouter le bouton de retour
-            resultMessage.appendChild(backButton);
+            companion2.src = 'image/geo/monstre3.png';
         }
     } else {
-        resultMessage.style.color = 'red';
-        resultMessage.innerText = 'Perdu pour cette fois. Recommencez!';
-        // Supprimer la dernière récompense du JSON
-        const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
-        if (rewards.recompense.length > 0) {
-            rewards.recompense.pop(); // Supprimer la dernière récompense
-            localStorage.setItem('rewards', JSON.stringify(rewards));
-        }
-        resultMessage.appendChild(backButton);
+        console.error("Element with ID 'companion2' not found.");
     }
 }
 
-
-function clearResultMessage() {
-    document.getElementById('result-message').innerText = '';
-}
-
-// Initial setup
-document.addEventListener('DOMContentLoaded', () => {
-    startGame();
-});
+document.addEventListener('DOMContentLoaded', generateQuestion);

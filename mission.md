@@ -35,3 +35,10 @@
 <h3>bilbli</h3>
 <h4>Son</h4>
 <a href="https://pixabay.com/fr/music/search/genre/jeux%20vid%C3%A9o/" rel="stylesheet">Pixabay</a>
+
+
+
+
+Mission 2
+- mettre recompense niveau 3 sur math1 si difficulté 2 je joueur ne gagne plus de points de victoire + gagner le math.n1.d3 a la place du math.n1.d2 +  arrive a la carte affiche une croix à la place du rond afin que l'on comprenne que l'on a gagner et que l'on ne puisse plus cliquer.
+- mettre le niveau deux sur math2.html (copier coller math1.js en math2.js) corriger bug. Il faut avoir la barre de défillement + gerer le responcive sur mobile sur la page en mettant des logique @media.

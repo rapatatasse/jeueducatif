@@ -1,0 +1,11 @@
+
+.container {
+
+    /* Remplacez "chemin/vers/votre/image.jpg" par le chemin d'accès de votre image */
+    background-image: url('../image/pendu/ruedeville.jpg');
+
+}
+#wordImage {
+    height: 20vh;
+
+}
