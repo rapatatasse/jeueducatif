@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    background-image: url('../image/fond1.jpg');
+    background-position: bottom;
+}
+
+.yellow-text {
+    color: yellow;
+}
+
+.center-container {
+    position: relative;
+    top: 130px
+}
+
+.answers {
+    position: relative;
+    top: 40px
+}
+
+.answers button {
+    height: 9.5vh !important;
+    width: 17vh !important;
+    background-color: rgb(119, 0, 255) !important;
+}
