@@ -78,7 +78,11 @@ function changePokemonImage(level) {
 }
 
 function resetLives() {
-    playerLives = 5;
+    
+    const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
+    if (rewards.recompense.includes("alpha1.js")) {
+        playerLives = 5;
+    }
     opponentLives = 1;
 
     // Mettez à jour les barres de vie dans l'interface
