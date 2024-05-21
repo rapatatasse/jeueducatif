@@ -44,11 +44,27 @@ async function checkAnswer(playerAnswer) {
 
             // Mise à jour de la vie de l'adversaire dans l'interface
             updateLifeBar('opponentLifeBar', opponentLives);
+
+            // Ajout de l'effet de coup d'éclair pour l'adversaire
+            if (opponentLives <= 0) {
+                const opponentElement = document.getElementById('companion2');
+                opponentElement.classList.add('lightning-effect');
+                setTimeout(() => {
+                    opponentElement.classList.remove('lightning-effect');
+                }, 1000); // Durée de l'animation
+            }
         } else {
             playerLives--;
 
             // Mise à jour de la vie du joueur dans l'interface
             updateLifeBar('playerLifeBar', playerLives);
+
+            // Ajout de l'effet de coup d'éclair pour le joueur
+            const playerElement = document.getElementById('companion1');
+            playerElement.classList.add('lightning-effect');
+            setTimeout(() => {
+                playerElement.classList.remove('lightning-effect');
+            }, 200); // Durée de l'animation
         }
 
         if (opponentLives <= 0) {
