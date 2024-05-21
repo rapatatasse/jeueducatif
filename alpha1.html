@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,38 +10,43 @@
     <link rel="stylesheet" href="css/styleglobal.css">
     <title>Pokemon Attack Game</title>
 </head>
+
 <body>
     <div class="container">
-        <div class="game-container p-10">
+        <div class="game-container">
             <div class="column">
                 <div class="life-bar" id="playerLifeBar">❤❤❤❤❤</div>
-                <div class="companion" id="companion1"><img src="image/companion1.png" alt="Pokemon 1"></div>
+                <div class="companion" id="companion1">
+                    <img src="image/companion1.png" alt="Pokemon 1" style="max-width: 100%;">
+                </div>
             </div>
             <div class="column center-container">
                 <div class="question" id="question">?</div>
                 <div class="">
                     <div></div>
-                    <div class="answers" id="answers">
-                      <!--button answers generer avec le JS-->
-                    </div>
-                    <div class="result-message" id="result-message"></div>
                 </div>
             </div>
             <div class="column">
                 <div class="life-bar" id="opponentLifeBar">❤❤❤❤❤</div>
-                <div class="companion" id="companion2"><img src="image/alpha/alpha1.png" alt=""></div>
+                <div class="companion" id="companion2">
+                    <img src="image/alpha/alpha1.png" alt="" style="max-width: 100%;">
+                </div>
             </div>
         </div>
+        <div class="answers" id="answers">
+            <!--button answers generer avec le JS-->
+        </div>
+        <div class="result-message" id="result-message"></div>
 
-        <div class="bottom-card p-10">
-            <img src="image/joueur.png" alt="Joueur Image">
+        <div class="bottom-card ">
+            <img src="image/joueur.png" alt="Joueur Image" style="max-width: 100%;">
             <div class="player-info">
-                <h2>Informations du Joueur</h2>
-                <label for="levelSelect">Niveau:</label>
-                <span id="leveltexte" >1</span>
-                    
+                <h2 style="font-size: 1.5em;">Informations du Joueur</h2>
+                <label for="levelSelect" style="font-size: 1.2em;">Niveau:</label>
+                <span id="leveltexte" style="font-size: 1.2em;">1</span>
+
             </div>
-            <audio controls loop autoplay>
+            <audio controls loop autoplay style="width: 100%;">
                 <source src="son/math1.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
@@ -50,4 +56,5 @@
     <script src="js/alpha1.js"></script>
 
 </body>
+
 </html>
