@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/mathgeneral.css">
+    <link rel="stylesheet" href="css/math3.css">
+    <link rel="stylesheet" href="css/styleglobal.css">
+    <title>Multiplication Maths-3</title>
+    <audio autoplay loop>
+        <source src="son/math3.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'élément audio.
+    </audio>
+</head>
+<body>
+    <div class="container">
+        <div class="game-container p-10">
+            <div class="column">
+                <div class="life-bar" id="playerLifeBar">❤❤❤❤❤</div>
+                <div class="companion" id="companion1"><img src="image/companion1.png" alt="Pokemon 1"></div>
+            </div>
+            <div class="column center-container">
+                <div class="addition" id="addition">?</div>
+                <div class="">
+                    <div></div>
+                    <div class="answers" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                        <input type="text" id="userAnswer" placeholder="Votre réponse" style="width: 100%; max-width: 400px; margin-bottom: 30px;">
+                        <button onclick="submitAnswer()" style="width: 90%; max-width: 400px;">Vérifier</button>
+                    </div>
+                    <div class="result-message" id="result-message"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="life-bar" id="opponentLifeBar">❤❤❤❤❤</div>
+                <div class="companion" id="companion2"><img src="image/math/math31.png" alt=""></div>
+            </div>
+        </div>
+
+        <div class="bottom-card p-10">
+            <img src="image/joueur.png" alt="Joueur Image">
+            <div class="player-info">
+                <h2>Informations du Joueur</h2>
+                <label for="levelSelect">Niveau:</label>
+                <span id="leveltexte" >1</span>
+                    
+            </div>
+            <audio controls loop autoplay>
+                <source src="son/math3.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+    <a href="index.html" class="back-button">Retour</a>
+    <script src="js/math3.js"></script>
+
+</body>
+</html>
