@@ -1,0 +1,111 @@
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 400px;
+  height: 300px;
+}
+
+/* Style de la modal */
+.modal {
+  display: none; /* Cachez la modal par défaut */
+  position: fixed; /* Position fixée pour couvrir toute la fenêtre */
+  z-index: 1; /* Situez-la au-dessus du reste du contenu */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Ajoutez un défilement si nécessaire */
+  background-color: rgba(0, 0, 0, 0.5); /* Fond sombre semi-transparent */
+}
+
+/* Style du contenu de la modal */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* Centrez verticalement et horizontalement */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Ajustez la largeur de la modal ici */
+}
+
+/* Fermez le bouton de la modal */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Style du conteneur principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Utilisation de la hauteur de l'écran */
+  background-image: url('../image/back.png'); /* Remplacez le chemin par le chemin réel de votre image */
+  background-size: cover; /* Redimensionne l'image pour couvrir tout le conteneur */
+  background-position: center; /* Centre l'image dans le conteneur */
+}
+
+.score {
+  margin-bottom: 20px; /* Ajoutez un peu d'espace en bas */
+  color: white;
+}
+
+.grid {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  width: 400px; /* Largeur de la grille */
+  height: 300px; /* Hauteur de la grille */
+  top: 40px;
+}
+
+.pasbeau {
+  position: absolute; /* Position absolue pour pouvoir ajuster la position */
+  right: 250px; /* Ajustez la valeur selon votre préférence */
+  top: 73px; /* Ajustez la valeur selon votre préférence */
+}
+
+.monstre1 {
+  position: absolute; /* Position absolue pour pouvoir ajuster la position */
+  left: 150px; /* Ajustez la valeur selon votre préférence */
+  top: 20px; /* Ajustez la valeur selon votre préférence */
+  /* width: 20%; */
+}
+
+
+.player-info {
+  font-size: 20px;
+  flex: 1;
+  margin-left: 10px;
+  color: rgb(46, 72, 121);
+}
+
+
+.bottom-card {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8); 
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 250px ;
+  padding: 10px;
+  width: 70%;
+  height: 20vh;
+  top: 40px;
+}
+
+.bottom-card img {
+  height: 80%; 
+  border-radius: 5px;
+}

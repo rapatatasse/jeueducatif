@@ -40,7 +40,7 @@ function hiddenButtonOnMap() {
                 textElement.textContent = '2';
                   // Vérifiez si "math.n2.1.png" est dans les récompenses
             }
-              if (rewards.recompense.includes("math.n2.1.png")) {
+              if (rewards.recompense.includes("math.n2.d1.png")) {
               // Sélectionnez l'élément <a> pour "math.n2.1.png"
               const aElementMathN21 = document.getElementById('linkmath3');
               // Affichez l'élément en définissant son style display sur "block"
