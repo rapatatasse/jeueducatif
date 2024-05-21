@@ -124,7 +124,7 @@ function displayResultMessage(isPlayerWinner) {
 
 function resetGame() {
     playerLives = 5;
-    opponentLives = 5;
+    opponentLives = 1;
     updateLifeBar('playerLifeBar', playerLives);
     updateLifeBar('opponentLifeBar', opponentLives);
     generateQuestion();
