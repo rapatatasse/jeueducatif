@@ -1,8 +1,22 @@
-const wordImages = [
-    { word: "Etats-unis", image: "image/etats-unis.png" },
-    { word: "France", image: "image/france.png" },
-    { word: "Allemagne", image: "image/allemagne.png" },
-    { word: "Italie", image: "image/italie.png" }
+const wordImageseurope = [
+    { word: "Etats-unis", image: "image/geo/etats-unis.png" },
+    { word: "France", image: "image/geo/france.png" },
+    { word: "Allemagne", image: "image/geo/allemagne.png" },
+    { word: "Italie", image: "image/geo/italie.png" }
+];
+
+const wordImagesamerique = [
+    { word: "Canada", image: "image/geo/canada.png" },
+    { word: "Mexique", image: "image/geo/mexique.png" },
+    { word: "Bresil", image: "image/geo/bresil.png" },
+    { word: "Argentine", image: "image/geo/argentine.png" }
+];
+
+const wordImagesasie = [
+    { word: "Chine", image: "image/geo/chine.png" },
+    { word: "Japon", image: "image/geo/japon.png" },
+    { word: "Inde", image: "image/geo/inde.png" },
+    { word: "France", image: "image/geo/france.png" }
 ];
 
 let level = 1;
@@ -14,18 +28,33 @@ function generateQuestion() {
     const buttonsContainer = document.getElementById('buttonsContainer');
     buttonsContainer.innerHTML = '';
 
-    currentWordIndex = Math.floor(Math.random() * wordImages.length);
-    const currentWord = wordImages[currentWordIndex];
+    let currentWord;
+    if (level === 1) {
+        currentWordIndex = Math.floor(Math.random() * wordImageseurope.length);
+        currentWord = wordImageseurope[currentWordIndex];
+    } else if (level === 2) {
+        currentWordIndex = Math.floor(Math.random() * wordImagesamerique.length);
+        currentWord = wordImagesamerique[currentWordIndex];
+    } else {
+        currentWordIndex = Math.floor(Math.random() * wordImagesasie.length);
+        currentWord = wordImagesasie[currentWordIndex];
+    }
 
     document.getElementById('wordImage').src = currentWord.image;
 
     const answerOptions = [];
-
     answerOptions.push(currentWord.word);
 
     while (answerOptions.length < 4) {
-        const randomIndex = Math.floor(Math.random() * wordImages.length);
-        const randomWord = wordImages[randomIndex].word;
+        const randomIndex = Math.floor(Math.random() * (
+            level === 1 ? wordImageseurope.length : 
+            level === 2 ? wordImagesamerique.length : 
+            wordImagesasie.length));
+        
+        const randomWord = (level === 1 ? wordImageseurope : 
+                            level === 2 ? wordImagesamerique : 
+                            wordImagesasie)[randomIndex].word;
+        
         if (!answerOptions.includes(randomWord)) {
             answerOptions.push(randomWord);
         }
@@ -39,10 +68,14 @@ function generateQuestion() {
         button.setAttribute('onclick', `checkAnswer('${option}')`);
         buttonsContainer.appendChild(button);
     });
+
+    changePokemonImage(level);
 }
 
 function checkAnswer(selectedAnswer) {
-    const correctAnswer = wordImages[currentWordIndex].word;
+    const correctAnswer = (level === 1 ? wordImageseurope : 
+                          level === 2 ? wordImagesamerique : 
+                          wordImagesasie)[currentWordIndex].word;
 
     if (selectedAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
         opponentLives--;
@@ -84,9 +117,9 @@ function updateLevelText(level) {
     document.getElementById('leveltexte').innerText = level;
 }
 
-function displayResultMessage(isWinner) {
+function displayResultMessage(isPlayerWinner) {
     const resultMessage = document.getElementById('result-message');
-    resultMessage.innerText = isWinner ? "Bravo ! Vous avez gagné !" : "Désolé, vous avez perdu. Essayez à nouveau !";
+    resultMessage.innerText = isPlayerWinner ? "Bravo ! Vous avez gagné !" : "Désolé, vous avez perdu. Essayez à nouveau !";
 }
 
 function resetGame() {
@@ -95,6 +128,22 @@ function resetGame() {
     updateLifeBar('playerLifeBar', playerLives);
     updateLifeBar('opponentLifeBar', opponentLives);
     generateQuestion();
+}
+
+function changePokemonImage(level) {
+    const pokemonImage = document.getElementById('pokemonImage');
+    const companion2 = document.getElementById('companion2').querySelector('img');
+    if (companion2) {
+        if (level === 1) {
+            companion2.src = 'image/geo/monstre1.png';
+        } else if (level === 2) {
+            companion2.src = 'image/geo/monstre2.png';
+        } else {
+            companion2.src = 'image/geo/monstre3.png';
+        }
+    } else {
+        console.error("Element with ID 'companion2' not found.");
+    }
 }
 
 document.addEventListener('DOMContentLoaded', generateQuestion);
