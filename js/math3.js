@@ -44,11 +44,27 @@ async function checkAnswer(playerAnswer) {
 
             // Mise à jour de la vie de l'adversaire dans l'interface
             updateLifeBar('opponentLifeBar', opponentLives);
+
+            // Ajout de l'effet de coup d'éclair pour l'adversaire
+            if (opponentLives <= 0) {
+                const opponentElement = document.getElementById('companion2');
+                opponentElement.classList.add('lightning-effect');
+                setTimeout(() => {
+                    opponentElement.classList.remove('lightning-effect');
+                }, 1000); // Durée de l'animation
+            }
         } else {
             playerLives--;
 
             // Mise à jour de la vie du joueur dans l'interface
             updateLifeBar('playerLifeBar', playerLives);
+
+            // Ajout de l'effet de coup d'éclair pour le joueur
+            const playerElement = document.getElementById('companion1');
+            playerElement.classList.add('lightning-effect');
+            setTimeout(() => {
+                playerElement.classList.remove('lightning-effect');
+            }, 200); // Durée de l'animation
         }
 
         if (opponentLives <= 0) {
@@ -106,7 +122,10 @@ function generateQuestion() {
 }
 
 function displayResultMessage(isPlayerWinner) {
+    console.log("Displaying result message...");
     const resultMessage = document.getElementById('result-message');
+    console.log("Result message element:", resultMessage);
+
     const backButton = document.createElement('button');
     backButton.innerText = 'Retour à la carte';
     backButton.classList.add('backbutton');
@@ -114,13 +133,14 @@ function displayResultMessage(isPlayerWinner) {
         window.location.href = 'index.html';
     });
 
-
     if (isPlayerWinner) {
+        console.log("Player won!");
         resultMessage.style.color = 'green';
         if (level < 3) {
             resultMessage.innerText = 'Bravo!';
-            gamesWon.innerText =  Math.floor(gamesWon.innerText) + 2;
+            gamesWon.innerText = Math.floor(gamesWon.innerText) + 2;
         } else {
+            console.log("Player reached max level!");
             const rewards = JSON.parse(localStorage.getItem('rewards')) || { recompense: [] };
             if (!rewards.recompense.includes('math33.png')) {
                 resultMessage.innerText = 'Bravo! Vous avez atteint le niveau maximum.';
@@ -139,6 +159,7 @@ function displayResultMessage(isPlayerWinner) {
             }
         }
     } else {
+        console.log("Player lost!");
         resultMessage.style.color = 'red';
         resultMessage.innerText = 'Perdu pour cette fois. Recommencez!';
         var lineBreak = document.createElement('br');
@@ -168,6 +189,6 @@ function pause() {
         setTimeout(() => {
             console.log("Après 2 secondes");
             resolve();
-        }, 500);
+        }, 0);
     });
 }
