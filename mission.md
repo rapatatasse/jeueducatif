@@ -42,3 +42,18 @@
 Mission 2
 - mettre recompense niveau 3 sur math1 si difficulté 2 je joueur ne gagne plus de points de victoire + gagner le math.n1.d3 a la place du math.n1.d2 +  arrive a la carte affiche une croix à la place du rond afin que l'on comprenne que l'on a gagner et que l'on ne puisse plus cliquer.
 - mettre le niveau deux sur math2.html (copier coller math1.js en math2.js) corriger bug. Il faut avoir la barre de défillement + gerer le responcive sur mobile sur la page en mettant des logique @media.
+
+Berne Alexis : 
+Geo : 
+A faire 
+1/ Ajout bouton retour sous texte vous avez gagner.
+2/ Faire ajout de la recompense (image qui s'enregistre dans le cache)
+3/ mettre responcive sur page 
+
+
+
+A faire sur Alpha :
+- les reponses dois être trié par ordre alphabétique
+- mettre barre de temps 
+- mettre responcive sur page 
+
