@@ -41,13 +41,24 @@ function hiddenButtonOnMap() {
                   // Vérifiez si "math.n2.1.png" est dans les récompenses
             }
               if (rewards.recompense.includes("math.n2.d1.png")) {
-              // Sélectionnez l'élément <a> pour "math.n2.1.png"
-              const aElementMathN21 = document.getElementById('linkmath3');
-              // Affichez l'élément en définissant son style display sur "block"
-              if (aElementMathN21) {
+                // Sélectionnez l'élément <a> pour "math.n2.1.png"
+                const aElementMathN21 = document.getElementById('linkmath3');
+                // Affichez l'élément en définissant son style display sur "block"
+                if (aElementMathN21) {
                   aElementMathN21.style.display = "block";
+                }
+            
             }
-
         }
-    }
+        //math.n2.d1.png
+        if (rewards.recompense.includes("math.n1.d2.png"))  {
+            // Sélectionnez l'élément <a>
+            const textElement = document.querySelector('#linkmath1 text');
+            // Vérifiez si l'élément texte existe avant de le modifier
+            if (textElement) {
+                textElement.textContent = '✖'; // Remplacer le contenu par une croix
+            }
+        }
+        
+           
 }
