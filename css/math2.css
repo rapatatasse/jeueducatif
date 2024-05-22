@@ -37,3 +37,46 @@
 .answers input[type="text"]:focus {
     border-color: #4CAF50; /* Changement de la couleur de la bordure lorsque l'input est actif */
 }
+@media (min-width: 768px) {
+    
+    .container {
+        background-size: contain; /* Ajuste la taille de l'image pour qu'elle soit entièrement visible sans découpage */
+    }
+    .answers {
+        width: 50vw;  /* Largeur à 50% de la largeur de la fenêtre */
+        height: auto; /* Hauteur automatique pour s'adapter au contenu */
+        padding: 30px; /* Augmente le padding pour les écrans plus larges */
+        border-radius: 12px; /* Augmente le rayon des bords pour les écrans plus larges */
+    }
+
+    .answers input[type="text"] {
+        width: 70%;  /* Largeur de l'input à 70% du conteneur parent */
+        height: auto; /* Hauteur automatique pour s'adapter au contenu */
+        padding: 12px; /* Augmente le padding pour une zone de clic plus large */
+        border-radius: 6px; /* Augmente le rayon des bords de l'input */
+    }
+
+    .answers button {
+        width: 20%; /* Largeur du bouton à 20% du conteneur parent */
+        height: auto; /* Hauteur automatique pour s'adapter au contenu */
+        padding: 12px 24px; /* Augmente le padding du bouton */
+        border-radius: 6px; /* Augmente le rayon des bords du bouton */
+    }
+
+    .companion img {
+        width: 20vw;  /* Largeur de l'image à 20% de la largeur de la fenêtre */
+        height: auto; /* Hauteur automatique pour maintenir les proportions */
+    }
+
+    .question {
+        width: 70vw;  /* Largeur de la question à 70% de la largeur de la fenêtre */
+        height: auto; /* Hauteur automatique pour s'adapter au contenu */
+    }
+
+    .bottom-card {
+        width: 50vw;  /* Largeur de la carte du bas à 50% de la largeur de la fenêtre */
+        height: auto; /* Hauteur automatique pour s'adapter au contenu */
+    }
+}
+
+
